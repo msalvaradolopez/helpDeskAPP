@@ -1,0 +1,77 @@
+<style>
+    .botonSize {
+        width: 100%;
+    }
+</style>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">{{_TITULO}}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" [formGroup]="validaCaptura" autocomplete="off">
+                        <div class="card-body">
+                            <div class="form-group row">
+
+                                <label for="IDSUCURSAL" class="col-2 col-form-label">SUCURSAL</label>
+                                <div class="col-2">
+                                    <input type="text" class="form-control" id="IDSUCURSAL"
+                                        [class.is-invalid]="validaCampo('IDSUCURSAL')" formControlName="IDSUCURSAL">
+                                    <div *ngIf="validaCampo('IDSUCURSAL')">
+                                        <small style="color: red;">{{mensajeErrorCampo('IDSUCURSAL')}}</small>
+                                    </div>
+                                </div>
+                                 
+                                <label *ngIf="false" for="IDCLIENTE" class="col-2 col-form-label">ID CLIENTE</label>
+                                <div *ngIf="false" class="col-2">
+                                    <input type="text" class="form-control" id="IDCLIENTE"
+                                        [class.is-invalid]="validaCampo('IDCLIENTE')" formControlName="IDCLIENTE">
+                                    <div *ngIf="validaCampo('IDCLIENTE')">
+                                        <small style="color: red;">{{mensajeErrorCampo('IDCLIENTE')}}</small>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group row">
+                                <label for="NOMSUCURSAL" class="col-sm-2 col-form-label">NOMBRE SUCURSAL</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="NOMSUCURSAL"
+                                        [class.is-invalid]="validaCampo('NOMSUCURSAL')" formControlName="NOMSUCURSAL">
+                                    <div *ngIf="validaCampo('NOMSUCURSAL')">
+                                        <small style="color: red;">{{mensajeErrorCampo('NOMSUCURSAL')}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-4 col-md-2">
+                                    <button type="submit" (click)="goBack()"
+                                        class="btn btn-default float-right botonSize">Salir</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-footer -->
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+    <!-- <ngx-confirm-box (confirmEvt)="confirmChange($event)"></ngx-confirm-box> -->
+    <ngx-confirm-box [bgColor]="bgColor" [confirmHeading]="confirmHeading" [confirmCanceltext]="confirmCanceltext"
+        [confirmContent]="confirmContent" [confirmOkaytext]="confirmOkaytext" (confirmEvt)="delDatos($event)">
+    </ngx-confirm-box>
+</section>

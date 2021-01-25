@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ServiciosService } from './servicios.service';
+declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -8,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit{
   title = 'helpDeskAPP';
 
-  menuSiNo:boolean = true;
+  menuSiNo:boolean = false;
   IDUSUARIO: string = "MSALVARADO";
 
   classMenu: string = "";
@@ -25,8 +29,29 @@ export class AppComponent implements OnInit{
     { IDMENU: "login", NOMBRE: "Login", ICONO: "nav-icon fas fa-key", ROL: "A" },
   ];
 
+  constructor(private _servicios: ServiciosService, private _router: Router) { }
+
   ngOnInit() {
     localStorage.clear();
-    this.menuItems = this.menu.filter(x => x.ROL == "A");
+
+    this._servicios.activarmenu$
+      .subscribe(accion => {
+        this.menuSiNo = accion;
+        if (accion) {
+          this.ROL = localStorage.getItem("ROL");
+          this.menuItems = this.menu.filter(x => x.ROL == this.ROL);
+          if (this.ROL == "A")
+            this._router.navigate(['/sucursales']);
+
+          if (this.ROL == "U")
+            this._router.navigate(['/tickets']);
+
+          this.classMenu = "content-wrapper";
+        } else
+          this.classMenu = "";
+
+        this.IDUSUARIO = localStorage.getItem("IDUSUARIO");
+      });
+
   }
 }
