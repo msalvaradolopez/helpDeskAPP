@@ -13,6 +13,14 @@ import { LoginComponent } from './login/login.component';
 import { SucursalesComponent } from './sucursales/sucursales.component';
 import { SucursaldetComponent } from './sucursaldet/sucursaldet.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DeptosComponent } from './deptos/deptos.component';
+import { DeptodetComponent } from './deptodet/deptodet.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariodetComponent } from './usuariodet/usuariodet.component';
+import { TemasComponent } from './temas/temas.component';
+import { TemadetComponent } from './temadet/temadet.component';
+import { SlasComponent } from './slas/slas.component';
+import { SladetComponent } from './sladet/sladet.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +28,15 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     SucursalesComponent,
     SucursaldetComponent,
-    NavbarComponent
+    NavbarComponent,
+    DeptosComponent,
+    DeptodetComponent,
+    UsuariosComponent,
+    UsuariodetComponent,
+    TemasComponent,
+    TemadetComponent,
+    SlasComponent,
+    SladetComponent
   ],
   imports: [
     BrowserModule,

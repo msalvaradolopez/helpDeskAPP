@@ -29,7 +29,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Sucursales</h1>
+                <h1>Temas</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -39,18 +39,13 @@
 <section class="content">
     <div class="container-fluid">
         <div class="list-group">
-            <a *ngFor="let item of rows" (click)="editRow(item.IDSUCURSAL)"
+            <a *ngFor="let item of rows" (click)="editRow(item.IDTIPO)"
                 class="list-group-item list-group-item-action trow">
                 <div class="row">
                     <div class="col-6">
                         <strong>
-                            <h5 class="mb-1">{{item.NOMSUCURSAL}}</h5>
+                            <h5 class="mb-1">{{item.NOMTIPO}}</h5>
                         </strong>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 trowColorLetra">
-                        {{ "CLAVE: " + item.IDSUCURSAL }}
                     </div>
                 </div>
             </a>
