@@ -67,13 +67,13 @@ export class SlasComponent implements OnInit {
   }
 
   editRow(idsal: string) {
-    localStorage.setItem("IDSLA", idsal);
+    localStorage.setItem("_IDSLA", idsal);
     localStorage.setItem("_ACCION", "E");
     this._router.navigate(['/sladet']);
   }
 
   newRow() {
-    localStorage.setItem("_IDTIPO", "0");
+    localStorage.setItem("_IDSLA", "0");
     localStorage.setItem("_ACCION", "N");
     this._router.navigate(['/sladet']);
   }
