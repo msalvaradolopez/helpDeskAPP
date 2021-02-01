@@ -29,7 +29,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Reglas SLA</h1>
+                <h1>Tickets</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -39,18 +39,18 @@
 <section class="content">
     <div class="container-fluid">
         <div class="list-group">
-            <a *ngFor="let item of rows" (click)="editRow(item.IDSLA)"
+            <a *ngFor="let item of rows" (click)="editRow(item.IDTICKET)"
                 class="list-group-item list-group-item-action trow">
                 <div class="row">
                     <div class="col-6">
                         <strong>
-                            <h5 class="mb-1">PRIORIDAD : {{item.IDPRIORIDAD}}</h5>
+                            <h5 class="mb-1">{{item.ASUNTO}}</h5>
                         </strong>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 trowColorLetra">
-                        RESOLVER EN : {{item.RESOLVEREN}} Hora(s) | RESPONDER EN: {{item.RESPONDEREN}} Hora(s)
+                        TICKET : {{item.IDTICKET}} | ASIGNADO: {{item.NOMASIGNADO}} | USUARIO : {{item.NOMUSUARIO}}
                     </div>
                 </div>
             </a>

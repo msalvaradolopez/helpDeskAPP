@@ -21,6 +21,9 @@ import { TemasComponent } from './temas/temas.component';
 import { TemadetComponent } from './temadet/temadet.component';
 import { SlasComponent } from './slas/slas.component';
 import { SladetComponent } from './sladet/sladet.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { TicketdetComponent } from './ticketdet/ticketdet.component';
+import { TicketflowComponent } from './ticketflow/ticketflow.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { SladetComponent } from './sladet/sladet.component';
     TemasComponent,
     TemadetComponent,
     SlasComponent,
-    SladetComponent
+    SladetComponent,
+    TicketsComponent,
+    TicketdetComponent,
+    TicketflowComponent
   ],
   imports: [
     BrowserModule,
