@@ -19,18 +19,67 @@
                     <form class="form-horizontal" [formGroup]="validaCaptura" autocomplete="off">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="IDTICKET" class="col-sm-2 col-form-label">ID TICKET</label>
-                                <div class="col-sm-8">
+                                <div class="col-2">
+                                    <label for="IDTICKET">ID TICKET</label>
                                     <input type="text" class="form-control" id="IDTICKET"
                                         [class.is-invalid]="validaCampo('IDTICKET')" formControlName="IDTICKET">
                                     <div *ngIf="validaCampo('IDTICKET')">
                                         <small style="color: red;">{{mensajeErrorCampo('IDTICKET')}}</small>
                                     </div>
                                 </div>
+
+                                <div class="col-4">
+                                    <label for="IDUSUARIO">USUARIO</label>
+                                    <!-- select -->
+                                    <select class="form-control" id="IDUSUARIO"
+                                        [class.is-invalid]="validaCampo('IDUSUARIO')" formControlName="IDUSUARIO">
+                                        <option [value]="item.IDUSUARIO" *ngFor="let item of USUARIOS">{{item.NOMUSUARIO}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="validaCampo('IDUSUARIO')">
+                                        <small style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('IDUSUARIO')}}</small>
+                                    </div>
+
+                                    
+                                </div>
+
+                                <div class="col-2">
+                                    <label for="ESTATUS">ESTATUS</label>
+                                    <!-- select -->
+                                    <select class="form-control" id="ESTATUS"
+                                        [class.is-invalid]="validaCampo('ESTATUS')" formControlName="ESTATUS">
+                                        <option [value]="item.IDTIPO" *ngFor="let item of estatus">{{item.NOMBRE}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="validaCampo('ESTATUS')">
+                                        <small style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('ESTATUS')}}</small>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-2">
+                                    <label for="FECHA">FECHA</label>
+                                    <input type="text" class="form-control" id="FECHA"
+                                        [class.is-invalid]="validaCampo('ORIGEN')" formControlName="FECHA">
+                                    <div *ngIf="validaCampo('FECHA')">
+                                        <small style="color: red;">{{mensajeErrorCampo('FECHA')}}</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-3">
+                                    <label for="IDTIPO">CATEGORIA</label>
+                                    <input type="text" class="form-control" id="IDTIPO"
+                                        [class.is-invalid]="validaCampo('IDTIPO')" formControlName="IDTIPO">
+                                    <div *ngIf="validaCampo('IDTIPO')">
+                                        <small style="color: red;">{{mensajeErrorCampo('IDTIPO')}}</small>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group row">
-                                 
+
                                 <label *ngIf="false" for="IDCLIENTE" class="col-2 col-form-label">ID CLIENTE</label>
                                 <div *ngIf="false" class="col-2">
                                     <input type="text" class="form-control" id="IDCLIENTE"
@@ -42,26 +91,6 @@
 
 
                             </div>
-                            <div class="form-group row">
-                                <label for="IDTIPO" class="col-sm-2 col-form-label">CATEGORIA</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="IDTIPO"
-                                        [class.is-invalid]="validaCampo('IDTIPO')" formControlName="IDTIPO">
-                                    <div *ngIf="validaCampo('IDTIPO')">
-                                        <small style="color: red;">{{mensajeErrorCampo('IDTIPO')}}</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="IDUSUARIO" class="col-sm-2 col-form-label">USUARIO</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="IDUSUARIO"
-                                        [class.is-invalid]="validaCampo('IDUSUARIO')" formControlName="IDUSUARIO">
-                                    <div *ngIf="validaCampo('IDUSUARIO')">
-                                        <small style="color: red;">{{mensajeErrorCampo('IDUSUARIO')}}</small>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="form-group row">
                                 <label for="ASUNTO" class="col-sm-2 col-form-label">ASUNTO</label>
@@ -70,16 +99,6 @@
                                         [class.is-invalid]="validaCampo('ASUNTO')" formControlName="ASUNTO">
                                     <div *ngIf="validaCampo('ASUNTO')">
                                         <small style="color: red;">{{mensajeErrorCampo('ASUNTO')}}</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="ESTATUS" class="col-sm-2 col-form-label">ESTATUS</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="ESTATUS"
-                                        [class.is-invalid]="validaCampo('ESTATUS')" formControlName="ESTATUS">
-                                    <div *ngIf="validaCampo('ESTATUS')">
-                                        <small style="color: red;">{{mensajeErrorCampo('ESTATUS')}}</small>
                                     </div>
                                 </div>
                             </div>
@@ -117,17 +136,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="FECHA" class="col-sm-2 col-form-label">FECHA</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="FECHA"
-                                        [class.is-invalid]="validaCampo('ORIGEN')" formControlName="FECHA">
-                                    <div *ngIf="validaCampo('FECHA')">
-                                        <small style="color: red;">{{mensajeErrorCampo('FECHA')}}</small>
-                                    </div>
-                                </div>
-                            </div>
-                            
 
                         </div>
                         <!-- /.card-body -->

@@ -65,6 +65,7 @@ export class TicketsComponent implements OnInit {
 
   newRow() {
     localStorage.setItem("_IDTICKET", "0");
+    localStorage.setItem("_IDUSUARIO", this._idusuario);
     localStorage.setItem("_ACCION", "N");
     this._router.navigate(['/ticketdet']);
   }

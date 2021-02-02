@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
 import { NgxConfirmBoxService } from 'ngx-confirm-box';
+declare const moment: any;
 
 
 @Component({
@@ -33,6 +34,14 @@ export class TicketdetComponent implements OnInit {
 
   subscription: Subscription;
 
+  fechaActual: Date = new Date();
+
+  estatus: any[] = [
+    { IDTIPO: "A", NOMBRE: "ACTIVO" },
+    { IDTIPO: "B", NOMBRE: "BAJA" }
+  ];
+
+  USUARIOS: any[];
 
   constructor(private _servicios: ServiciosService,
     private _router: Router,
@@ -49,14 +58,14 @@ export class TicketdetComponent implements OnInit {
       IDTICKET: new FormControl({ value: "", disabled: true }, [Validators.required]),
       IDCLIENTE: new FormControl({ value: this._IDCLIENTE, disabled: true }, [Validators.required]),
       IDTIPO: new FormControl("", [Validators.required]),
-      IDUSUARIO: new FormControl({ value: "", disabled: true }, [Validators.required]),
+      IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
       ASUNTO: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
       DESCTICKET: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       ESTATUS: new FormControl({ value: "A", disabled: true }, [Validators.required]),
       ASIGNADOA: new FormControl(""),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
-      FECHA: new FormControl({ value: "1", disabled: true }, [Validators.required])
+      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"), disabled: true }, [Validators.required])
     });
 
     this.subscription = this._servicios.navbarRespIcono$
@@ -72,6 +81,12 @@ export class TicketdetComponent implements OnInit {
           this.confirmBox.show();
 
       });
+
+    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0" })
+      .subscribe(x => {
+        this.USUARIOS = x;
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Usuarios"));
+
 
 
     if (this._ACCION == "E") {
