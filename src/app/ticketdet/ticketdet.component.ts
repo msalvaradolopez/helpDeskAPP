@@ -42,6 +42,14 @@ export class TicketdetComponent implements OnInit {
   ];
 
   USUARIOS: any[];
+  CATEGORIAS: any[];
+
+  prioridades: any[] = [
+    { ID: 1, NOMBRE: "BAJA" },
+    { ID: 2, NOMBRE: "MADIANA" },
+    { ID: 3, NOMBRE: "ALTA" },
+    { ID: 4, NOMBRE: "URGENTE" }
+  ];
 
   constructor(private _servicios: ServiciosService,
     private _router: Router,
@@ -87,7 +95,11 @@ export class TicketdetComponent implements OnInit {
         this.USUARIOS = x;
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Usuarios"));
 
+    this._servicios.wsGeneral("getTiposList", { idcliente: this._IDCLIENTE, valor: "0" })
+      .subscribe(x => {
+        this.CATEGORIAS = x;
 
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Categorias"));
 
     if (this._ACCION == "E") {
       this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: true, GUARDAR: true, BUSCAR: false });
@@ -156,7 +168,7 @@ export class TicketdetComponent implements OnInit {
 
   goBack() {
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
-    this._router.navigate(['/temas']);
+    this._router.navigate(['/tickets']);
   }
 
   ngOnDestroy() {
@@ -166,6 +178,4 @@ export class TicketdetComponent implements OnInit {
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
     this.subscription.unsubscribe();
   }
-
-
 }

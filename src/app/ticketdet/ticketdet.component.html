@@ -21,7 +21,7 @@
                             <div class="form-group row">
                                 <div class="col-2">
                                     <label for="IDTICKET">ID TICKET</label>
-                                    <input type="text" class="form-control" id="IDTICKET"
+                                    <input type="text" class="form-control form-control-sm" id="IDTICKET"
                                         [class.is-invalid]="validaCampo('IDTICKET')" formControlName="IDTICKET">
                                     <div *ngIf="validaCampo('IDTICKET')">
                                         <small style="color: red;">{{mensajeErrorCampo('IDTICKET')}}</small>
@@ -31,22 +31,24 @@
                                 <div class="col-4">
                                     <label for="IDUSUARIO">USUARIO</label>
                                     <!-- select -->
-                                    <select class="form-control" id="IDUSUARIO"
+                                    <select class="form-control form-control-sm" id="IDUSUARIO"
                                         [class.is-invalid]="validaCampo('IDUSUARIO')" formControlName="IDUSUARIO">
-                                        <option [value]="item.IDUSUARIO" *ngFor="let item of USUARIOS">{{item.NOMUSUARIO}}
+                                        <option [value]="item.IDUSUARIO" *ngFor="let item of USUARIOS">
+                                            {{item.NOMUSUARIO}}
                                         </option>
                                     </select>
                                     <div *ngIf="validaCampo('IDUSUARIO')">
-                                        <small style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('IDUSUARIO')}}</small>
+                                        <small
+                                            style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('IDUSUARIO')}}</small>
                                     </div>
 
-                                    
+
                                 </div>
 
                                 <div class="col-2">
                                     <label for="ESTATUS">ESTATUS</label>
                                     <!-- select -->
-                                    <select class="form-control" id="ESTATUS"
+                                    <select class="form-control form-control-sm" id="ESTATUS"
                                         [class.is-invalid]="validaCampo('ESTATUS')" formControlName="ESTATUS">
                                         <option [value]="item.IDTIPO" *ngFor="let item of estatus">{{item.NOMBRE}}
                                         </option>
@@ -59,43 +61,59 @@
 
                                 <div class="col-2">
                                     <label for="FECHA">FECHA</label>
-                                    <input type="text" class="form-control" id="FECHA"
+                                    <input type="text" class="form-control form-control-sm" id="FECHA"
                                         [class.is-invalid]="validaCampo('ORIGEN')" formControlName="FECHA">
                                     <div *ngIf="validaCampo('FECHA')">
                                         <small style="color: red;">{{mensajeErrorCampo('FECHA')}}</small>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-group row">
                                 <div class="col-3">
                                     <label for="IDTIPO">CATEGORIA</label>
-                                    <input type="text" class="form-control" id="IDTIPO"
+                                    <!-- select -->
+                                    <select class="form-control form-control-sm" id="IDTIPO"
                                         [class.is-invalid]="validaCampo('IDTIPO')" formControlName="IDTIPO">
+                                        <option [value]="item.IDTIPO" *ngFor="let item of CATEGORIAS">{{item.NOMTIPO}}
+                                        </option>
+                                    </select>
                                     <div *ngIf="validaCampo('IDTIPO')">
-                                        <small style="color: red;">{{mensajeErrorCampo('IDTIPO')}}</small>
+                                        <small style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('IDTIPO')}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <label for="IDPRIORIDAD">PRIORIDAD</label>
+                                    <!-- select -->
+                                    <select class="form-control form-control-sm" id="IDPRIORIDAD"
+                                        [class.is-invalid]="validaCampo('IDPRIORIDAD')" formControlName="IDPRIORIDAD">
+                                        <option [value]="item.ID" *ngFor="let item of prioridades">{{item.NOMBRE}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="validaCampo('IDPRIORIDAD')">
+                                        <small
+                                            style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('IDPRIORIDAD')}}</small>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-
-                                <label *ngIf="false" for="IDCLIENTE" class="col-2 col-form-label">ID CLIENTE</label>
-                                <div *ngIf="false" class="col-2">
-                                    <input type="text" class="form-control" id="IDCLIENTE"
-                                        [class.is-invalid]="validaCampo('IDCLIENTE')" formControlName="IDCLIENTE">
-                                    <div *ngIf="validaCampo('IDCLIENTE')">
-                                        <small style="color: red;">{{mensajeErrorCampo('IDCLIENTE')}}</small>
+                                <div class="col-12">
+                                    <label *ngIf="false" for="IDCLIENTE" class="col-2 col-form-label">ID CLIENTE</label>
+                                    <div *ngIf="false" class="col-2">
+                                        <input type="text" class="form-control" id="IDCLIENTE"
+                                            [class.is-invalid]="validaCampo('IDCLIENTE')" formControlName="IDCLIENTE">
+                                        <div *ngIf="validaCampo('IDCLIENTE')">
+                                            <small style="color: red;">{{mensajeErrorCampo('IDCLIENTE')}}</small>
+                                        </div>
                                     </div>
                                 </div>
-
 
                             </div>
 
                             <div class="form-group row">
-                                <label for="ASUNTO" class="col-sm-2 col-form-label">ASUNTO</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="ASUNTO"
+                                <div class="col-10">
+                                    <label for="ASUNTO">ASUNTO</label>
+                                    <input type="text" class="form-control form-control-sm" id="ASUNTO"
                                         [class.is-invalid]="validaCampo('ASUNTO')" formControlName="ASUNTO">
                                     <div *ngIf="validaCampo('ASUNTO')">
                                         <small style="color: red;">{{mensajeErrorCampo('ASUNTO')}}</small>
@@ -103,10 +121,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div *ngIf="false" class="form-group row">
                                 <label for="ASIGNADOA" class="col-sm-2 col-form-label">ASIGNADO A</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="ASIGNADOA"
+                                    <input type="text" class="form-control form-control-sm" id="ASIGNADOA"
                                         [class.is-invalid]="validaCampo('ASIGNADOA')" formControlName="ASIGNADOA">
                                     <div *ngIf="validaCampo('ASIGNADOA')">
                                         <small style="color: red;">{{mensajeErrorCampo('ASIGNADOA')}}</small>
@@ -114,21 +132,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="IDPRIORIDAD" class="col-sm-2 col-form-label">PRIORIDAD</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="IDPRIORIDAD"
-                                        [class.is-invalid]="validaCampo('IDPRIORIDAD')" formControlName="IDPRIORIDAD">
-                                    <div *ngIf="validaCampo('IDPRIORIDAD')">
-                                        <small style="color: red;">{{mensajeErrorCampo('IDPRIORIDAD')}}</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
+                            <div *ngIf="false" class="form-group row">
                                 <label for="ORIGEN" class="col-sm-2 col-form-label">ORIGEN</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="ORIGEN"
+                                    <input type="text" class="form-control form-control-sm" id="ORIGEN"
                                         [class.is-invalid]="validaCampo('ORIGEN')" formControlName="ORIGEN">
                                     <div *ngIf="validaCampo('ORIGEN')">
                                         <small style="color: red;">{{mensajeErrorCampo('ORIGEN')}}</small>
@@ -136,7 +143,17 @@
                                 </div>
                             </div>
 
-
+                            <div class="form-group row">
+                                <div class="col-10">
+                                    <label for="DESCTICKET">DESCRIPCION</label>
+                                    <textarea type="text" class="form-control form-control-sm" id="DESCTICKET"
+                                        [class.is-invalid]="validaCampo('DESCTICKET')" formControlName="DESCTICKET"
+                                        rows="3"></textarea>
+                                    <div *ngIf="validaCampo('DESCTICKET')">
+                                        <small style="color: red;">{{mensajeErrorCampo('DESCTICKET')}}</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
