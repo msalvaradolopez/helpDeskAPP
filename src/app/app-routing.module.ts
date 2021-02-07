@@ -11,27 +11,32 @@ import { TemadetComponent } from './temadet/temadet.component';
 import { TemasComponent } from './temas/temas.component';
 import { TicketdetComponent } from './ticketdet/ticketdet.component';
 import { TicketflowComponent } from './ticketflow/ticketflow.component';
+import { TicketflowdetComponent } from './ticketflowdet/ticketflowdet.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { UsuariodetComponent } from './usuariodet/usuariodet.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent},
-  { path: "sucursales", component: SucursalesComponent},
-  { path: "sucursaldet", component: SucursaldetComponent},
-  { path: "deptos", component: DeptosComponent},
-  { path: "deptodet", component: DeptodetComponent},
-  { path: "usuarios", component: UsuariosComponent},
-  { path: "usuariodet", component: UsuariodetComponent},
-  { path: "temas", component: TemasComponent},
-  { path: "temadet", component: TemadetComponent},
-  { path: "slas", component: SlasComponent},
-  { path: "sladet", component: SladetComponent},
-  { path: "tickets", component: TicketsComponent},
-  { path: "ticketdet", component: TicketdetComponent},
-  { path: "ticketflow", component: TicketflowComponent},
-  { path: '',   redirectTo: '/login', pathMatch: 'full' },
+  { path: "login", component: LoginComponent },
+  { path: "sucursales", component: SucursalesComponent },
+  { path: "sucursaldet", component: SucursaldetComponent },
+  { path: "deptos", component: DeptosComponent },
+  { path: "deptodet", component: DeptodetComponent },
+  { path: "usuarios", component: UsuariosComponent },
+  { path: "usuariodet", component: UsuariodetComponent },
+  { path: "temas", component: TemasComponent },
+  { path: "temadet", component: TemadetComponent },
+  { path: "slas", component: SlasComponent },
+  { path: "sladet", component: SladetComponent },
+  { path: "tickets", component: TicketsComponent },
+  { path: "ticketdet", component: TicketdetComponent },
+  {
+    path: "ticketflow", component: TicketflowComponent, children: [
+      { path: 'ticketflowdet', component: TicketflowdetComponent }
+    ]
+  },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent }
 ];
 

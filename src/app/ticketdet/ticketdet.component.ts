@@ -62,6 +62,7 @@ export class TicketdetComponent implements OnInit {
     this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
     this._ACCION = localStorage.getItem("_ACCION");
 
+
     this.validaCaptura = new FormGroup({
       IDTICKET: new FormControl({ value: "", disabled: true }, [Validators.required]),
       IDCLIENTE: new FormControl({ value: this._IDCLIENTE, disabled: true }, [Validators.required]),
@@ -70,7 +71,7 @@ export class TicketdetComponent implements OnInit {
       ASUNTO: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
       DESCTICKET: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       ESTATUS: new FormControl({ value: "A", disabled: true }, [Validators.required]),
-      ASIGNADOA: new FormControl(""),
+      ASIGNADOA: new FormControl(null),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
       FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"), disabled: true }, [Validators.required])
@@ -124,8 +125,19 @@ export class TicketdetComponent implements OnInit {
           });
         }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"),
           () => this.validaCaptura.markAllAsTouched());
-    } else
+    } else {
       this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: true, BUSCAR: false });
+
+      this._servicios.wsGeneral("getNewIdTicket", { idcliente: this._IDCLIENTE, valor: "0" })
+        .subscribe(x => {
+          this._IDTICKET = x;
+          this.validaCaptura.patchValue({
+            IDTICKET: x
+          });
+        }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "New Ticket"));
+
+    }
+
 
   }
 
@@ -139,7 +151,7 @@ export class TicketdetComponent implements OnInit {
 
     this._servicios.wsGeneral(ws, this.validaCaptura.getRawValue())
       .subscribe(resp => {
-        this._toastr.success(resp, "Tema");
+        this._toastr.success(resp, "Ticket");
         this.goBack()
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));

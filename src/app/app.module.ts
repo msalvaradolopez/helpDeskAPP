@@ -24,6 +24,7 @@ import { SladetComponent } from './sladet/sladet.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { TicketdetComponent } from './ticketdet/ticketdet.component';
 import { TicketflowComponent } from './ticketflow/ticketflow.component';
+import { TicketflowdetComponent } from './ticketflowdet/ticketflowdet.component';
 
 @NgModule({
   declarations: [
@@ -42,11 +43,11 @@ import { TicketflowComponent } from './ticketflow/ticketflow.component';
     SladetComponent,
     TicketsComponent,
     TicketdetComponent,
-    TicketflowComponent
+    TicketflowComponent,
+    TicketflowdetComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
