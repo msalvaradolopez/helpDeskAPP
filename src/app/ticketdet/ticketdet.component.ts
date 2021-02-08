@@ -37,8 +37,7 @@ export class TicketdetComponent implements OnInit {
   fechaActual: Date = new Date();
 
   estatus: any[] = [
-    { IDTIPO: "A", NOMBRE: "ACTIVO" },
-    { IDTIPO: "B", NOMBRE: "BAJA" }
+    { IDTIPO: "O", NOMBRE: "ABIERTO" }
   ];
 
   USUARIOS: any[];
@@ -70,7 +69,7 @@ export class TicketdetComponent implements OnInit {
       IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
       ASUNTO: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
       DESCTICKET: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-      ESTATUS: new FormControl({ value: "A", disabled: true }, [Validators.required]),
+      ESTATUS: new FormControl({ value: "O", disabled: true }, [Validators.required]),
       ASIGNADOA: new FormControl(null),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
@@ -91,7 +90,7 @@ export class TicketdetComponent implements OnInit {
 
       });
 
-    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0" })
+    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0", rol : "0" })
       .subscribe(x => {
         this.USUARIOS = x;
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Usuarios"));
@@ -149,9 +148,14 @@ export class TicketdetComponent implements OnInit {
     else
       ws = "insTICKET";
 
+    let descticket = this.validaCaptura.controls['DESCTICKET'].value;
+
     this._servicios.wsGeneral(ws, this.validaCaptura.getRawValue())
       .subscribe(resp => {
         this._toastr.success(resp, "Ticket");
+        if (this._ACCION == "N")
+          this.insNotaEspecial(descticket);
+
         this.goBack()
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
@@ -168,6 +172,25 @@ export class TicketdetComponent implements OnInit {
           error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
     }
   }
+
+  // REACCIONA CUANDO SE ASIGNA EL RESPONSABLE PARA DAR SEGUIMIENTO/SOLICION.
+  insNotaEspecial(nota: string) {
+    let param = {
+      IDTICKETDET: null,
+      IDTICKET: this._IDTICKET,
+      IDCLIENTE: this._IDCLIENTE,
+      IDUSUARIO: this._IDUSUARIO,
+      DESCTICKETDET: nota,
+      FECHA: moment(this.fechaActual).format("DD/MM/YYYY")
+    }
+
+    this._servicios.wsGeneral("insTicketDet", param)
+      .subscribe(resp => {
+        this._toastr.success(resp, "Notas");
+      },
+        error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Notas"));
+  }
+
 
   // validacion de campos generales.
   validaCampo(campo: string): boolean {

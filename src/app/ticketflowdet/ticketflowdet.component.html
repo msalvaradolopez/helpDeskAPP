@@ -83,9 +83,17 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col-4 col-md-2">
+                                <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
                                     <button type="submit" [disabled]="!validaNota.valid" (click)="guardar()"
                                         class="btn btn-primary float-right botonSize">Publicar nota</button>
+                                </div>
+                                <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
+                                    <button type="button" [disabled]="!validaNota.valid" (click)="cerrarTicket()"
+                                        class="btn btn-primary float-right botonSize">Cerrar ticket</button>
+                                </div>
+                                <div *ngIf="_ESTATUS == 'CERRADO'" class="col-4 col-md-2">
+                                    <button type="button" [disabled]="!validaNota.valid" (click)="reabrirTicket()"
+                                        class="btn btn-primary float-right botonSize">Re-abrir ticket</button>
                                 </div>
                             </div>
                         </div>
@@ -93,6 +101,29 @@
                     </form>
                 </div>
                 <!-- /.card -->
+            </div>
+        </div>
+
+        <h3>Historial notas</h3>
+        <div *ngFor="let item of NOTAS" class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h6 class="card-title">FECHA: {{item.FECHA | date: "dd/MM/yyyy"}} / USUARIO: {{item.IDUSUARIO}}
+                        </h6>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div class="col-12">
+                            <textarea type="text" class="form-control form-control-sm" rows="3" [readonly] = "true" [(ngModel)]="item.DESCTICKETDET">
+                            </textarea>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

@@ -27,7 +27,9 @@ export class TicketflowComponent implements OnInit {
   _IDCLIENTE: string = "";
   _IDTICKET: string = "";
   _IDUSUARIO: string = "";
-  _ACCION: string = "N"
+  _ACCION: string = "N";
+
+  _ASIGNADOA_AUX: string = null;
 
   validaCaptura: FormGroup;
 
@@ -36,8 +38,11 @@ export class TicketflowComponent implements OnInit {
   fechaActual: Date = new Date();
 
   estatus: any[] = [
-    { IDTIPO: "A", NOMBRE: "ACTIVO" },
-    { IDTIPO: "B", NOMBRE: "BAJA" }
+    { IDTIPO: "O", NOMBRE: "ABIERTO" },
+    { IDTIPO: "A", NOMBRE: "ASIGNADO" },
+    { IDTIPO: "B", NOMBRE: "BAJA" },
+    { IDTIPO: "C", NOMBRE: "CERRADO" },
+    { IDTIPO: "R", NOMBRE: "RE-ABIERTO" },
   ];
 
   USUARIOS: any[];
@@ -69,6 +74,7 @@ export class TicketflowComponent implements OnInit {
     this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
     this._ACCION = localStorage.getItem("_ACCION");
 
+    this._TITULO = this._TITULO + " " + this._IDTICKET;
 
     this.validaCaptura = new FormGroup({
       IDTICKET: new FormControl({ value: this._IDTICKET, disabled: true }, [Validators.required]),
@@ -77,7 +83,7 @@ export class TicketflowComponent implements OnInit {
       IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
       ASUNTO: new FormControl({ value: "", disabled: true }, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
       DESCTICKET: new FormControl({ value: "", disabled: true }, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-      ESTATUS: new FormControl({ value: "A", disabled: false }, [Validators.required]),
+      ESTATUS: new FormControl({ value: "O", disabled: true }, [Validators.required]),
       ASIGNADOA: new FormControl(null),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
@@ -98,12 +104,12 @@ export class TicketflowComponent implements OnInit {
 
       });
 
-    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0" })
+    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0", rol: "0" })
       .subscribe(x => {
         this.USUARIOS = x;
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Usuarios"));
 
-    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0" })
+    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0", rol: "A" })
       .subscribe(x => {
         this.ASIGNADOS = x;
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Asignados"));
@@ -120,7 +126,8 @@ export class TicketflowComponent implements OnInit {
 
       this._servicios.wsGeneral("getTicketByID", { valor: this._IDTICKET, idcliente: this._IDCLIENTE, idusuario: this._IDUSUARIO })
         .subscribe(datos => {
-          console.log(datos);
+          this._ASIGNADOA_AUX = datos.ASIGNADOA;
+
           this.validaCaptura.setValue({
             IDTICKET: datos.IDTICKET,
             IDCLIENTE: datos.IDCLIENTE,
@@ -130,7 +137,7 @@ export class TicketflowComponent implements OnInit {
             ASUNTO: datos.ASUNTO,
             DESCTICKET: datos.DESCTICKET,
             ESTATUS: datos.ESTATUS,
-            ASIGNADOA: "",
+            ASIGNADOA: datos.ASIGNADOA,
             ORIGEN: datos.ORIGEN,
             FECHA: moment(datos.FECHA).format("DD/MM/YYYY")
 
@@ -154,10 +161,20 @@ export class TicketflowComponent implements OnInit {
     else
       ws = "insTICKET";
 
+    let asignadoa = this.validaCaptura.controls['ASIGNADOA'].value;
+    if (asignadoa != this._ASIGNADOA_AUX)
+      this.validaCaptura.patchValue({
+        ESTATUS: "A"
+      });
+
     this._servicios.wsGeneral(ws, this.validaCaptura.getRawValue())
       .subscribe(resp => {
         this._toastr.success(resp, "Ticket");
-        this.goBack()
+
+        if (asignadoa != this._ASIGNADOA_AUX)
+          this.insNotaEspecial("El ticket :" + this._IDTICKET + " fue asignado al usuario: " + asignadoa);
+
+        // this.goBack()
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
   }
@@ -172,6 +189,24 @@ export class TicketflowComponent implements OnInit {
         },
           error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
     }
+  }
+
+  // REACCIONA CUANDO SE ASIGNA EL RESPONSABLE PARA DAR SEGUIMIENTO/SOLICION.
+  insNotaEspecial(nota: string) {
+    let param = {
+      IDTICKETDET: null,
+      IDTICKET: this._IDTICKET,
+      IDCLIENTE: this._IDCLIENTE,
+      IDUSUARIO: this._IDUSUARIO,
+      DESCTICKETDET: nota,
+      FECHA: moment(this.fechaActual).format("DD/MM/YYYY")
+    }
+
+    this._servicios.wsGeneral("insTicketDet", param)
+      .subscribe(resp => {
+        this._toastr.success(resp, "Notas");
+      },
+        error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Notas"));
   }
 
   // validacion de campos generales.
@@ -191,6 +226,7 @@ export class TicketflowComponent implements OnInit {
   ngOnDestroy() {
     localStorage.removeItem("_IDTICKET");
     localStorage.removeItem("_IDUSUARIO");
+    localStorage.removeItem("_ESTATUS");
     localStorage.removeItem("_ACCION");
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
     this.subscription.unsubscribe();

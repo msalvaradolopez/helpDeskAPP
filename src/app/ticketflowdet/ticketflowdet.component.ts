@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
@@ -13,14 +14,14 @@ declare const moment: any;
   styleUrls: ['./ticketflowdet.component.css']
 })
 export class TicketflowdetComponent implements OnInit {
-    // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
-    bgColor = 'rgba(0,0,0,0.5)'; // overlay background color
-    confirmHeading = '';
-    confirmContent = "Confirmar eliminar el registro.";
-    confirmCanceltext = "Cancelar";
-    confirmOkaytext = "Eliminar";
-    // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
-  
+  // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
+  bgColor = 'rgba(0,0,0,0.5)'; // overlay background color
+  confirmHeading = '';
+  confirmContent = "Confirmar eliminar el registro.";
+  confirmCanceltext = "Cancelar";
+  confirmOkaytext = "Eliminar";
+  // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
+
 
   datos: any = null;
   _TITULO: string = "TICKET NOTA."
@@ -28,6 +29,8 @@ export class TicketflowdetComponent implements OnInit {
   _IDTICKET: string = "";
   _IDUSUARIO: string = "";
   _ACCION: string = "N"
+  _ESTATUS: string = "O";
+  NOTAS: any[] = null;
 
   validaNota: FormGroup;
 
@@ -36,6 +39,7 @@ export class TicketflowdetComponent implements OnInit {
   fechaActual: Date = new Date();
 
   constructor(private _servicios: ServiciosService,
+    private _router: Router,
     private _toastr: ToastrService,
     private confirmBox: NgxConfirmBoxService) { }
 
@@ -46,6 +50,11 @@ export class TicketflowdetComponent implements OnInit {
     this._IDTICKET = localStorage.getItem("_IDTICKET"); // VARIABLE PARAMETRO.
     this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
     this._ACCION = localStorage.getItem("_ACCION");
+    this._ESTATUS = localStorage.getItem("_ESTATUS");
+
+    this._TITULO = this._TITULO + " " + this._IDTICKET;
+
+    this.notasHistorial();
 
     this.validaNota = new FormGroup({
       IDTICKETDET: new FormControl({ value: null, disabled: true }, [Validators.required]),
@@ -64,6 +73,50 @@ export class TicketflowdetComponent implements OnInit {
       .subscribe(resp => {
         this._toastr.success(resp, "Ticket");
         this.resetTheForm();
+        this.notasHistorial();
+      },
+        error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
+  }
+
+  cerrarTicket() {
+
+    let param = {
+      IDTICKET: this._IDTICKET,
+      IDCLIENTE: this._IDCLIENTE,
+      ESTATUS: "C"
+    };
+
+    this._servicios.wsGeneral("updTICKET", param)
+      .subscribe(resp => {
+        this._servicios.wsGeneral("insTicketDet", this.validaNota.getRawValue())
+          .subscribe(resp => {
+            this._toastr.success(resp, "Ticket");
+            this._router.navigate(['/tickets']);
+          },
+            error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
+
+      },
+        error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
+
+
+  }
+
+  reabrirTicket() {
+    let param = {
+      IDTICKET: this._IDTICKET,
+      IDCLIENTE: this._IDCLIENTE,
+      ESTATUS: "R"
+    };
+
+    this._servicios.wsGeneral("updTICKET", param)
+      .subscribe(resp => {
+        this._servicios.wsGeneral("insTicketDet", this.validaNota.getRawValue())
+          .subscribe(resp => {
+            this._toastr.success(resp, "Ticket");
+            this._router.navigate(['/tickets']);
+          },
+            error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
+
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
   }
@@ -92,5 +145,10 @@ export class TicketflowdetComponent implements OnInit {
     return this._servicios.getErrorMessageField(this.validaNota, campo);
   }
 
-
+  notasHistorial() {
+    this._servicios.wsGeneral("getTicketDetList", { idcliente: this._IDCLIENTE, valor: this._IDTICKET })
+      .subscribe(x => {
+        this.NOTAS = x;
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Notas"));
+  }
 }

@@ -39,14 +39,21 @@
 <section class="content">
     <div class="container-fluid">
         <div class="list-group">
-            <a *ngFor="let item of rows" (click)="editRow(item.IDTICKET)"
+            <a *ngFor="let item of rows" (click)="editRow(item)"
                 class="list-group-item list-group-item-action trow">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-11">
                         <strong>
                             <h5 class="mb-1">{{item.ASUNTO}}</h5>
                         </strong>
                     </div>
+                    <div class="col-1">
+                        <span
+                         [ngClass]="item.ESTATUS == 'ASIGNADO' ? 'badge badge-pill badge-success' : item.ESTATUS == 'CERRADO' ? 'badge badge-pill badge-danger' : item.ESTATUS == 'RE-ABIERTO' ? 'badge badge-pill badge-warning' : 'badge badge-pill badge-primary'">
+                        {{item.ESTATUS}}
+                    </span>
+                    </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-12 trowColorLetra">

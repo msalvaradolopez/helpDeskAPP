@@ -45,7 +45,7 @@ export class UsuariosComponent implements OnInit {
     if (this.valorBuscar == "")
       this.valorBuscar = "0";
 
-    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._idcliente, valor: this.valorBuscar })
+    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._idcliente, valor: this.valorBuscar, rol: "0" })
       .subscribe(x => {
         this.rows = x;
 

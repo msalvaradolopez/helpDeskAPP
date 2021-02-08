@@ -14,7 +14,7 @@ export class TicketsComponent implements OnInit {
   rows: any[] = null;
   valorBuscar: string = "";
   _idcliente: string = "";
-  _rol: string =  "";
+  _rol: string = "";
   _idusuario: string = "";
 
   subscription: Subscription;
@@ -53,12 +53,24 @@ export class TicketsComponent implements OnInit {
       .subscribe(x => {
         this.rows = x;
 
+        x.forEach(element => {
+          if (element.ESTATUS == "O")
+            element.ESTATUS = "ABIERTO";
+          if (element.ESTATUS == "A")
+            element.ESTATUS = "ASIGNADO";
+          if (element.ESTATUS == "C")
+            element.ESTATUS = "CERRADO";
+          if (element.ESTATUS == "R")
+            element.ESTATUS = "RE-ABIERTO";
+        });
+
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Tickets"));
   }
 
-  editRow(idtiket: string) {
-    localStorage.setItem("_IDTICKET", idtiket);
+  editRow(ticket: any) {
+    localStorage.setItem("_IDTICKET", ticket.IDTICKET);
     localStorage.setItem("_IDUSUARIO", this._idusuario);
+    localStorage.setItem("_ESTATUS", ticket.ESTATUS);
     localStorage.setItem("_ACCION", "E");
     this._router.navigate(['/ticketflow']);
   }
