@@ -8,7 +8,10 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-2">
+
+            </div>
+            <div class="col-8">
                 <!-- general form elements -->
                 <div class="card card-secondary">
                     <div class="card-header">
@@ -19,7 +22,7 @@
                     <form class="form-horizontal" [formGroup]="validaCaptura" autocomplete="off">
                         <div class="card-body">
                             <div class="form-group row">
-                                <div class="col-2">
+                                <div *ngIf="false" class="col-2">
                                     <label for="IDTICKET">ID TICKET</label>
                                     <input type="text" class="form-control form-control-sm" id="IDTICKET"
                                         [class.is-invalid]="validaCampo('IDTICKET')" formControlName="IDTICKET">
@@ -28,7 +31,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4">
+                                <div *ngIf="false" class="col-4">
                                     <label for="IDUSUARIO">USUARIO</label>
                                     <!-- select -->
                                     <select class="form-control form-control-sm" id="IDUSUARIO"
@@ -45,7 +48,7 @@
 
                                 </div>
 
-                                <div class="col-2">
+                                <div *ngIf="false" class="col-2">
                                     <label for="ESTATUS">ESTATUS</label>
                                     <!-- select -->
                                     <select class="form-control form-control-sm" id="ESTATUS"
@@ -59,7 +62,7 @@
 
                                 </div>
 
-                                <div class="col-2">
+                                <div *ngIf="false" class="col-2">
                                     <label for="FECHA">FECHA</label>
                                     <input type="text" class="form-control form-control-sm" id="FECHA"
                                         [class.is-invalid]="validaCampo('ORIGEN')" formControlName="FECHA">
@@ -69,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-3">
+                                <div class="col-6">
                                     <label for="IDTIPO">CATEGORIA</label>
                                     <!-- select -->
                                     <select class="form-control form-control-sm" id="IDTIPO"
@@ -81,7 +84,7 @@
                                         <small style="color: rgb(150, 50, 50);">{{mensajeErrorCampo('IDTIPO')}}</small>
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-6">
                                     <label for="IDPRIORIDAD">PRIORIDAD</label>
                                     <!-- select -->
                                     <select class="form-control form-control-sm" id="IDPRIORIDAD"
@@ -111,7 +114,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-10">
+                                <div class="col-12">
                                     <label for="ASUNTO">ASUNTO</label>
                                     <input type="text" class="form-control form-control-sm" id="ASUNTO"
                                         [class.is-invalid]="validaCampo('ASUNTO')" formControlName="ASUNTO">
@@ -144,7 +147,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-10">
+                                <div class="col-12">
                                     <label for="DESCTICKET">DESCRIPCION</label>
                                     <textarea type="text" class="form-control form-control-sm" id="DESCTICKET"
                                         [class.is-invalid]="validaCampo('DESCTICKET')" formControlName="DESCTICKET"
