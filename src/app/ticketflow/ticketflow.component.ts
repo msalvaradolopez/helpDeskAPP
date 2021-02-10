@@ -126,6 +126,8 @@ export class TicketflowComponent implements OnInit {
 
       this._servicios.wsGeneral("getTicketByID", { valor: this._IDTICKET, idcliente: this._IDCLIENTE, idusuario: this._IDUSUARIO })
         .subscribe(datos => {
+
+          this.datos = datos;
           this._ASIGNADOA_AUX = datos.ASIGNADOA;
 
           this.validaCaptura.setValue({
