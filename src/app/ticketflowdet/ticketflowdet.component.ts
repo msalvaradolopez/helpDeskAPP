@@ -62,7 +62,7 @@ export class TicketflowdetComponent implements OnInit {
       IDCLIENTE: new FormControl({ value: this._IDCLIENTE, disabled: true }, [Validators.required]),
       IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
       DESCTICKETDET: new FormControl({ value: "", disabled: false }, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"), disabled: true }, [Validators.required])
+      FECHA: new FormControl({ value: this.fechaActual, disabled: true }, [Validators.required])
     });
 
   }

@@ -38,25 +38,47 @@
                 <!-- general form elements -->
                 <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">[ {{datos.IDTICKET}} ] - {{datos.ASUNTO}}</h3>
+                        <h3 class="card-title"> {{ _TITULO }} </h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-2 trowColorLetra" style="margin-top: 5px;">
+                            <div class="col-4 col-sm-4 col-lg-2  trowColorLetra" style="margin-top: 5px;">
                                 FECHA: {{datos.FECHA | date: "dd/MM/yyyy"}}
                             </div>
-                            <div class="col-2 trowColorLetra" style="margin-top: 5px;">
-                                {{datos.IDUSUARIO}}
+                            <div class="col-6 col-sm-6 col-lg-4 trowColorLetra" style="margin-top: 5px;">
+                                USUARIO: {{datos.NOMUSUARIO}}
+                            </div>
+                            <div class="col-4 col-sm-4 col-lg-2 trowColorLetra" style="margin-top: 5px;">
+                                ESTATUS: {{datos.NOMESTATUS}}
+                            </div>
+                            <div class="col-4 col-sm-4 col-lg-3 trowColorLetra" style="margin-top: 5px;">
+                                TEMA: {{datos.NOMTIPO}}
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 trowColorLetra">
-                                ASIGNADO A : {{datos.ASIGNADOA}}
+
+                            <div class="col-4 col-sm-4 col-lg-2 trowColorLetra">
+                                <label for="ORIGEN">Origen</label>
+                                <!-- select -->
+                                <select class="form-control form-control-sm trowColorLetra" id="ORIGEN"
+                                    [(ngModel)]="datos.ORIGEN">
+                                    <option [value]="item.ID" *ngFor="let item of origenes">{{item.NOMBRE}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-6 col-lg-2 trowColorLetra">
+                                <label for="ASIGNADOA">Asignado a:</label>
+                                <!-- select -->
+                                <select class="form-control form-control-sm trowColorLetra" id="ASIGNADOA"
+                                    [(ngModel)]="datos.ASIGNADOA">
+                                    <option [value]="item.IDUSUARIO" *ngFor="let item of ASIGNADOS">{{item.NOMUSUARIO}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
-                            <textarea class="col-12" type="text" rows="3" [readonly]="true"
+                            <textarea class="col-12" type="text" rows="3" [readonly]="true" style="margin-top: 5px;"
                                 [(ngModel)]="datos.DESCTICKET">
                                     </textarea>
                         </div>

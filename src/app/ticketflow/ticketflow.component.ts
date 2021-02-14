@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
@@ -30,8 +29,7 @@ export class TicketflowComponent implements OnInit {
   _ACCION: string = "N";
 
   _ASIGNADOA_AUX: string = null;
-
-  validaCaptura: FormGroup;
+  _ASIGNADOA: string = null;
 
   subscription: Subscription;
 
@@ -56,7 +54,7 @@ export class TicketflowComponent implements OnInit {
     { ID: 4, NOMBRE: "URGENTE" }
   ];
 
-  origen: any[] = [
+  origenes: any[] = [
     { ID: 1, NOMBRE: "HELPDESK" },
     { ID: 2, NOMBRE: "EMAIL" },
     { ID: 3, NOMBRE: "LLAMADA" },
@@ -76,28 +74,10 @@ export class TicketflowComponent implements OnInit {
 
     this._TITULO = this._TITULO + " " + this._IDTICKET;
 
-    this.validaCaptura = new FormGroup({
-      IDTICKET: new FormControl({ value: this._IDTICKET, disabled: true }, [Validators.required]),
-      IDCLIENTE: new FormControl({ value: this._IDCLIENTE, disabled: true }, [Validators.required]),
-      IDTIPO: new FormControl({ value: "", disabled: true }, [Validators.required]),
-      IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
-      ASUNTO: new FormControl({ value: "", disabled: true }, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
-      DESCTICKET: new FormControl({ value: "", disabled: true }, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-      ESTATUS: new FormControl({ value: "O", disabled: true }, [Validators.required]),
-      ASIGNADOA: new FormControl(null),
-      IDPRIORIDAD: new FormControl("1", [Validators.required]),
-      ORIGEN: new FormControl("1", [Validators.required]),
-      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"), disabled: true }, [Validators.required])
-    });
-
     this.subscription = this._servicios.navbarRespIcono$
       .subscribe(resp => {
-        if (resp == "GUARDAR") {
-          if (this.validaCaptura.invalid)
-            this._toastr.error("Falta campos por capturar.", "Tema");
-          else
+        if (resp == "GUARDAR")
             this.guardar();
-        }
 
         if (resp == "BORRAR")
           this.confirmBox.show();
@@ -128,27 +108,20 @@ export class TicketflowComponent implements OnInit {
         .subscribe(datos => {
 
           this.datos = datos;
-          this._ASIGNADOA_AUX = datos.ASIGNADOA;
+          this._ASIGNADOA_AUX = this.datos.ASIGNADOA;
+          this._TITULO = "# [" + this.datos.IDTICKET + "] - " + this.datos.ASUNTO;
 
-          this.validaCaptura.setValue({
-            IDTICKET: datos.IDTICKET,
-            IDCLIENTE: datos.IDCLIENTE,
-            IDPRIORIDAD: datos.IDPRIORIDAD,
-            IDTIPO: datos.IDTIPO,
-            IDUSUARIO: datos.IDUSUARIO,
-            ASUNTO: datos.ASUNTO,
-            DESCTICKET: datos.DESCTICKET,
-            ESTATUS: datos.ESTATUS,
-            ASIGNADOA: datos.ASIGNADOA,
-            ORIGEN: datos.ORIGEN,
-            FECHA: moment(datos.FECHA).format("DD/MM/YYYY")
-
-          });
-        }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"),
-          () => this.validaCaptura.markAllAsTouched());
+          if (datos.ESTATUS == "O")
+            datos.NOMESTATUS = "ABIERTA";
+          if (datos.ESTATUS == "A")
+            datos.NOMESTATUS = "ASIGNADA";
+          if (datos.ESTATUS == "C")
+            datos.NOMESTATUS = "CERRADA";
+          if (datos.ESTATUS == "R")
+            datos.NOMESTATUS = "RE-ABIERTA";
+        }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"));
     } else {
       this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: true, BUSCAR: false });
-
 
     }
 
@@ -163,19 +136,20 @@ export class TicketflowComponent implements OnInit {
     else
       ws = "insTICKET";
 
-    let asignadoa = this.validaCaptura.controls['ASIGNADOA'].value;
-    if (asignadoa != this._ASIGNADOA_AUX)
-      this.validaCaptura.patchValue({
-        ESTATUS: "A"
-      });
+    this._ASIGNADOA = this.datos.ASIGNADOA;
 
-    this._servicios.wsGeneral(ws, this.validaCaptura.getRawValue())
+    if (this._ASIGNADOA != this._ASIGNADOA_AUX){
+      this.datos.ESTATUS = "A";
+      this.datos.NOMESTATUS = "ASIGNADO";
+    }
+      
+
+    this._servicios.wsGeneral(ws, this.datos)
       .subscribe(resp => {
         this._toastr.success(resp, "Ticket");
 
-        if (asignadoa != this._ASIGNADOA_AUX)
-          this.insNotaEspecial("El ticket :" + this._IDTICKET + " fue asignado al usuario: " + asignadoa);
-
+        if (this._ASIGNADOA != this._ASIGNADOA_AUX)
+          this.insNotaEspecial("El ticket :" + this._IDTICKET + " fue asignado al usuario: " + this._ASIGNADOA);
         // this.goBack()
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
@@ -184,7 +158,7 @@ export class TicketflowComponent implements OnInit {
   delDatos(showConfirm: boolean): void {
 
     if (showConfirm) {
-      this._servicios.wsGeneral("delTicket", this.validaCaptura.getRawValue())
+      this._servicios.wsGeneral("delTicket", this.datos)
         .subscribe(resp => {
           this._toastr.success(resp, "Ticket");
           this.goBack();
@@ -201,7 +175,7 @@ export class TicketflowComponent implements OnInit {
       IDCLIENTE: this._IDCLIENTE,
       IDUSUARIO: this._IDUSUARIO,
       DESCTICKETDET: nota,
-      FECHA: moment(this.fechaActual).format("DD/MM/YYYY")
+      FECHA: this.fechaActual
     }
 
     this._servicios.wsGeneral("insTicketDet", param)
@@ -209,15 +183,6 @@ export class TicketflowComponent implements OnInit {
         this._toastr.success(resp, "Notas");
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Notas"));
-  }
-
-  // validacion de campos generales.
-  validaCampo(campo: string): boolean {
-    return this._servicios.isValidField(this.validaCaptura, campo);
-  }
-
-  mensajeErrorCampo(campo: string): string {
-    return this._servicios.getErrorMessageField(this.validaCaptura, campo);
   }
 
   goBack() {

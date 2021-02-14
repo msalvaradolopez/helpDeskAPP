@@ -73,7 +73,7 @@ export class TicketdetComponent implements OnInit {
       ASIGNADOA: new FormControl(null),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
-      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"), disabled: true }, [Validators.required])
+      FECHA: new FormControl({ value: this.fechaActual,  disabled: true }, [Validators.required])
     });
 
     this.subscription = this._servicios.navbarRespIcono$
@@ -90,7 +90,7 @@ export class TicketdetComponent implements OnInit {
 
       });
 
-    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0", rol : "0" })
+    this._servicios.wsGeneral("getUsuariosList", { idcliente: this._IDCLIENTE, valor: "0", rol: "0" })
       .subscribe(x => {
         this.USUARIOS = x;
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Usuarios"));
@@ -124,19 +124,8 @@ export class TicketdetComponent implements OnInit {
           });
         }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"),
           () => this.validaCaptura.markAllAsTouched());
-    } else {
+    } else
       this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: true, BUSCAR: false });
-
-      this._servicios.wsGeneral("getNewIdTicket", { idcliente: this._IDCLIENTE, valor: "0" })
-        .subscribe(x => {
-          this._IDTICKET = x;
-          this.validaCaptura.patchValue({
-            IDTICKET: x
-          });
-        }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "New Ticket"));
-
-    }
-
 
   }
 
@@ -152,6 +141,7 @@ export class TicketdetComponent implements OnInit {
 
     this._servicios.wsGeneral(ws, this.validaCaptura.getRawValue())
       .subscribe(resp => {
+        this._IDTICKET = resp;
         this._toastr.success(resp, "Ticket");
         if (this._ACCION == "N")
           this.insNotaEspecial(descticket);
@@ -181,12 +171,11 @@ export class TicketdetComponent implements OnInit {
       IDCLIENTE: this._IDCLIENTE,
       IDUSUARIO: this._IDUSUARIO,
       DESCTICKETDET: nota,
-      FECHA: moment(this.fechaActual).format("DD/MM/YYYY")
+      FECHA: this.fechaActual
     }
 
     this._servicios.wsGeneral("insTicketDet", param)
       .subscribe(resp => {
-        this._toastr.success(resp, "Notas");
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Notas"));
   }
