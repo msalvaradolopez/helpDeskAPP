@@ -62,7 +62,7 @@
                                 <label for="ORIGEN">Origen</label>
                                 <!-- select -->
                                 <select class="form-control form-control-sm trowColorLetra" id="ORIGEN"
-                                    [(ngModel)]="datos.ORIGEN">
+                                    [(ngModel)]="datos.ORIGEN" [disabled]="_ROL == 'U'">
                                     <option [value]="item.ID" *ngFor="let item of origenes">{{item.NOMBRE}}
                                     </option>
                                 </select>
@@ -71,7 +71,7 @@
                                 <label for="ASIGNADOA">Asignado a:</label>
                                 <!-- select -->
                                 <select class="form-control form-control-sm trowColorLetra" id="ASIGNADOA"
-                                    [(ngModel)]="datos.ASIGNADOA">
+                                    [(ngModel)]="datos.ASIGNADOA" [disabled]="_ROL == 'U'">
                                     <option [value]="item.IDUSUARIO" *ngFor="let item of ASIGNADOS">{{item.NOMUSUARIO}}
                                     </option>
                                 </select>

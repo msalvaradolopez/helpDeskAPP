@@ -35,32 +35,107 @@
     </div><!-- /.container-fluid -->
 </section>
 
+
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <div class="list-group">
-            <a *ngFor="let item of rows" (click)="editRow(item)"
-                class="list-group-item list-group-item-action trow">
-                <div class="row">
-                    <div class="col-11">
-                        <strong>
-                            <h5 class="mb-1">{{item.ASUNTO}}</h5>
-                        </strong>
-                    </div>
-                    <div class="col-1">
-                        <span
-                         [ngClass]="item.ESTATUS == 'ASIGNADO' ? 'badge badge-pill badge-success' : item.ESTATUS == 'CERRADO' ? 'badge badge-pill badge-danger' : item.ESTATUS == 'RE-ABIERTO' ? 'badge badge-pill badge-warning' : 'badge badge-pill badge-primary'">
-                        {{item.ESTATUS}}
-                    </span>
-                    </div>
-                    
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist" style="height: 60px;">
+                <a class="nav-link active text-center" id="nav-abiertos-tab" data-toggle="tab" href="#nav-abiertos"
+                    role="tab" aria-controls="nav-abiertos" aria-selected="true">
+                    <p>
+                        Abiertos
+                        <span class="badge badge-info right">{{_TICKETSABIERTOS}}</span>
+                    </p>
+                </a>
+                <a class="nav-link text-center" id="nav-cerrados-tab" data-toggle="tab" href="#nav-cerrados" role="tab"
+                    aria-controls="nav-cerrados" aria-selected="false">
+                    <p>
+                        Cerrados
+                        <span class="badge badge-info right">{{_TICKETSCERRADOS}}</span>
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-abiertos" role="tabpanel" aria-labelledby="nav-abiertos-tab">
+                <div class="list-group">
+                    <a *ngFor="let item of ticketsAbiertosRows" (click)="editRow(item)"
+                        class="list-group-item list-group-item-action trow">
+                        <div class="row">
+                            <div class="col-5">
+                                <strong>
+                                    <h5 class="mb-1"> <b>{{item.ASUNTO}}</b></h5>
+                                </strong>
+                            </div>
+                            <div class="col-2">
+                                PRIORIDAD:
+                                <span style="width: 70px; padding: 4px;"
+                                    [ngClass]="item.IDPRIORIDAD == 1 || item.IDPRIORIDAD == 2 ? 'badge badge-pill badge-success' : item.IDPRIORIDAD == 3 ? 'badge badge-pill badge-warning' : item.IDPRIORIDAD == 4 ? 'badge badge-pill badge-danger' : 'badge badge-pill badge-primary'">
+                                    {{item.NOMPRIORIDAD}}
+                                </span>
+                            </div>
+                            <div class="col-2">
+                                ESTATUS:
+                                <span style="width: 70px; padding: 4px;"
+                                    [ngClass]="item.ESTATUS == 'ASIGNADO' ? 'badge badge-pill badge-success' : item.ESTATUS == 'CERRADO' ? 'badge badge-pill badge-danger' : item.ESTATUS == 'RE-ABIERTO' ? 'badge badge-pill badge-warning' : 'badge badge-pill badge-primary'">
+                                    {{item.ESTATUS}}
+                                </span>
+                            </div>
+
+                            <div class="col-2">
+                                SLA:
+                                    {{item.SLA}}
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12 trowColorLetra">
+                                TICKET : {{item.IDTICKET}} | FECHA: {{item.FECHA | date: "dd/MM/yyyy h:mm a"}} | ASIGNADO:
+                                {{item.NOMASIGNADO}} | USUARIO : {{item.NOMUSUARIO}}
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="row">
-                    <div class="col-12 trowColorLetra">
-                        TICKET : {{item.IDTICKET}} | FECHA: {{item.FECHA | date: "dd/MM/yyyy"}} | ASIGNADO: {{item.NOMASIGNADO}} | USUARIO : {{item.NOMUSUARIO}}
-                    </div>
+            </div>
+            <div class="tab-pane fade" id="nav-cerrados" role="tabpanel" aria-labelledby="nav-cerrados-tab">
+                <div class="list-group">
+                    <a *ngFor="let item of ticketsCerradosRows" (click)="editRow(item)"
+                        class="list-group-item list-group-item-action trow">
+                        <div class="row">
+                            <div class="col-5">
+                                <strong>
+                                    <h5 class="mb-1"> <b>{{item.ASUNTO}}</b></h5>
+                                </strong>
+                            </div>
+                            <div class="col-2">
+                                PRIORIDAD:
+                                <span style="width: 70px; padding: 4px;"
+                                    [ngClass]="item.IDPRIORIDAD == 1 || item.IDPRIORIDAD == 2 ? 'badge badge-pill badge-success' : item.IDPRIORIDAD == 3 ? 'badge badge-pill badge-warning' : item.IDPRIORIDAD == 4 ? 'badge badge-pill badge-danger' : 'badge badge-pill badge-primary'">
+                                    {{item.NOMPRIORIDAD}}
+                                </span>
+                            </div>
+                            <div class="col-2">
+                                ESTATUS:
+                                <span style="width: 70px; padding: 4px;"
+                                    [ngClass]="item.ESTATUS == 'ASIGNADO' ? 'badge badge-pill badge-success' : item.ESTATUS == 'CERRADO' ? 'badge badge-pill badge-danger' : item.ESTATUS == 'RE-ABIERTO' ? 'badge badge-pill badge-warning' : 'badge badge-pill badge-primary'">
+                                    {{item.ESTATUS}}
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12 trowColorLetra">
+                                TICKET : {{item.IDTICKET}} | FECHA: {{item.FECHA | date: "dd/MM/yyyy"}} | ASIGNADO:
+                                {{item.NOMASIGNADO}} | USUARIO : {{item.NOMUSUARIO}}
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
         </div>
+
+
+
     </div>
 </section>

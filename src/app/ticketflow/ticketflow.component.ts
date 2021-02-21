@@ -21,11 +21,27 @@ export class TicketflowComponent implements OnInit {
   confirmOkaytext = "Eliminar";
   // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
 
-  datos: any = null;
+  datos: any = {
+    IDTICKET: "",
+    IDCLIENTE: 0,
+    IDPRIORIDAD: 0,
+    IDTIPO: 0,
+    NOMTIPO: "",
+    IDUSUARIO: "",
+    NOMUSUARIO: "",
+    ASUNTO: "",
+    DESCTICKET: "",
+    ESTATUS: "",
+    ASIGNADOA: "",  
+    NOMASIGNADO: "",
+    ORIGEN: "",
+    FECHA: ""
+  };
   _TITULO: string = "TICKET DETALLE."
   _IDCLIENTE: string = "";
   _IDTICKET: string = "";
   _IDUSUARIO: string = "";
+  _ROL:string = "U";
   _ACCION: string = "N";
 
   _ASIGNADOA_AUX: string = null;
@@ -70,6 +86,7 @@ export class TicketflowComponent implements OnInit {
     this._IDCLIENTE = localStorage.getItem("IDCLIENTE"); // VARIABLE PARAMETRO.
     this._IDTICKET = localStorage.getItem("_IDTICKET"); // VARIABLE PARAMETRO.
     this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
+    this._ROL = localStorage.getItem("ROL"); // VARIABLE GLOBAL.
     this._ACCION = localStorage.getItem("_ACCION");
 
     this._TITULO = this._TITULO + " " + this._IDTICKET;
@@ -101,13 +118,13 @@ export class TicketflowComponent implements OnInit {
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Categorias"));
 
     if (this._ACCION == "E") {
-      this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: true, GUARDAR: true, BUSCAR: false });
+      this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: true, BUSCAR: false });
 
-
-      this._servicios.wsGeneral("getTicketByID", { valor: this._IDTICKET, idcliente: this._IDCLIENTE, idusuario: this._IDUSUARIO })
+      this._servicios.wsGeneral("getTicketByID", { valor: this._IDTICKET, idcliente: this._IDCLIENTE, idusuario: this._IDUSUARIO, rol: this._ROL })
         .subscribe(datos => {
 
           this.datos = datos;
+
           this._ASIGNADOA_AUX = this.datos.ASIGNADOA;
           this._TITULO = "# [" + this.datos.IDTICKET + "] - " + this.datos.ASUNTO;
 

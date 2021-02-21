@@ -12,10 +12,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TicketsComponent implements OnInit {
   rows: any[] = null;
+  ticketsAbiertosRows: any[] = null;
+  ticketsCerradosRows: any[] = null;
   valorBuscar: string = "";
   _idcliente: string = "";
   _rol: string = "";
   _idusuario: string = "";
+  _TICKETSCERRADOS: number = 0;
+  _TICKETSABIERTOS: number = 0;
 
   subscription: Subscription;
 
@@ -52,8 +56,15 @@ export class TicketsComponent implements OnInit {
     this._servicios.wsGeneral("getTicketsList", { idcliente: this._idcliente, valor: this.valorBuscar, rol: this._rol, idusuario: this._idusuario })
       .subscribe(x => {
         this.rows = x;
+        this.ticketsAbiertosRows = this.rows.filter(x => x.ESTATUS == "O" || x.ESTATUS == "A" || x.ESTATUS == "R");
+        this.ticketsCerradosRows = this.rows.filter(x => x.ESTATUS == "C");
 
         x.forEach(element => {
+          if (element.ESTATUS == "O" || element.ESTATUS == "A" || element.ESTATUS == "R")
+            this._TICKETSABIERTOS++;
+          if (element.ESTATUS == "C")
+            this._TICKETSCERRADOS++;
+
           if (element.ESTATUS == "O")
             element.ESTATUS = "ABIERTO";
           if (element.ESTATUS == "A")
@@ -62,6 +73,15 @@ export class TicketsComponent implements OnInit {
             element.ESTATUS = "CERRADO";
           if (element.ESTATUS == "R")
             element.ESTATUS = "RE-ABIERTO";
+
+          if (element.IDPRIORIDAD == 1)
+            element.NOMPRIORIDAD = "BAJA";
+          if (element.IDPRIORIDAD == 2)
+            element.NOMPRIORIDAD = "MEDIA";
+          if (element.IDPRIORIDAD == 3)
+            element.NOMPRIORIDAD = "ALTA";
+          if (element.IDPRIORIDAD == 4)
+            element.NOMPRIORIDAD = "URGENTE";
         });
 
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Tickets"));
