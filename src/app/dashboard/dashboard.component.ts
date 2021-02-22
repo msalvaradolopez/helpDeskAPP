@@ -14,12 +14,16 @@ export class DashboardComponent implements OnInit {
   valorBuscar: string = "";
   _IDCLIENTE: string = "";
 
-  INDICADORES:any = {
+  INDICADORES: any = {
     TOTAL: 0,
     SINASIGNAR: 0,
     ATRASADOS: 0,
-    REABIERTOS:0
+    REABIERTOS: 0
   };
+
+  rows: any[] = null;
+  indicadorByUsuario: any[] = null;
+  indicadorByAsignado: any[] = null;
 
   subscription: Subscription;
 
@@ -41,6 +45,14 @@ export class DashboardComponent implements OnInit {
     this._servicios.wsGeneral("getDashBoardIndicadores", { idcliente: this._IDCLIENTE, valor: this.valorBuscar })
       .subscribe(x => {
         this.INDICADORES = x;
+
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "DashBoard"));
+
+    this._servicios.wsGeneral("getIndicadorByUser", { idcliente: this._IDCLIENTE, valor: this.valorBuscar })
+      .subscribe(x => {
+        this.rows = x;
+        this.indicadorByUsuario = this.rows.filter(x => x.ROL == "U");
+        this.indicadorByAsignado = this.rows.filter(x => x.ROL == "A");
 
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "DashBoard"));
   }
