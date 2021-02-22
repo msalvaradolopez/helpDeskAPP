@@ -32,6 +32,7 @@ export class UsuariodetComponent implements OnInit, OnDestroy {
 
   perfiles: any[] = [
     { ID: "A", NOMBRE: "ADMIN" },
+    { ID: "S", NOMBRE: "SUPERVISOR" },
     { ID: "U", NOMBRE: "USUARIO" }
   ];
 

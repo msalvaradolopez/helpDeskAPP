@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { DeptodetComponent } from './deptodet/deptodet.component';
 import { DeptosComponent } from './deptos/deptos.component';
 import { LoginComponent } from './login/login.component';
+import { ParamdetComponent } from './paramdet/paramdet.component';
+import { ParamsComponent } from './params/params.component';
 import { SladetComponent } from './sladet/sladet.component';
 import { SlasComponent } from './slas/slas.component';
 import { SucursaldetComponent } from './sucursaldet/sucursaldet.component';
@@ -36,6 +39,9 @@ const routes: Routes = [
       { path: 'ticketflowdet', component: TicketflowdetComponent }
     ]
   },
+  { path: "params", component: ParamsComponent },
+  { path: "paramdet", component: ParamdetComponent },
+  { path: "dashboard", component: DashboardComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent }
 ];

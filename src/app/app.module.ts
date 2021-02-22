@@ -25,6 +25,9 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { TicketdetComponent } from './ticketdet/ticketdet.component';
 import { TicketflowComponent } from './ticketflow/ticketflow.component';
 import { TicketflowdetComponent } from './ticketflowdet/ticketflowdet.component';
+import { ParamsComponent } from './params/params.component';
+import { ParamdetComponent } from './paramdet/paramdet.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { TicketflowdetComponent } from './ticketflowdet/ticketflowdet.component'
     TicketsComponent,
     TicketdetComponent,
     TicketflowComponent,
-    TicketflowdetComponent
+    TicketflowdetComponent,
+    ParamsComponent,
+    ParamdetComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
