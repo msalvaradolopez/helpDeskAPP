@@ -56,7 +56,7 @@ export class AppComponent implements OnInit{
 
           this.classMenu = "content-wrapper";
         } else
-          this.classMenu = "";
+          this.classMenu = "wrapper";
 
         this.IDUSUARIO = localStorage.getItem("IDUSUARIO");
       });

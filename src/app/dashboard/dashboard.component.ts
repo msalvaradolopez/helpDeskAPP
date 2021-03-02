@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ServiciosService } from '../servicios.service';
 import { ToastrService } from 'ngx-toastr';
 
+import { Param } from '../param';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +12,10 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
   valorBuscar: string = "";
   _IDCLIENTE: string = "";
+  _IDUSUARIO: string = "";
 
   INDICADORES: any = {
     TOTAL: 0,
@@ -22,8 +25,13 @@ export class DashboardComponent implements OnInit {
   };
 
   rows: any[] = null;
-  indicadorByUsuario: any[] = null;
-  indicadorByAsignado: any[] = null;
+  filtrosSucursal: any[] = null;
+  filtrosTema: any[] = null;
+  ticketsRows: any[] = null;
+  grupoSucRows: any[] = null;
+  grupoTemasRows: any[] = null;
+  filtroSucursales: any[] = null;
+  filtroTemas: any[] = null;
 
   subscription: Subscription;
 
@@ -33,29 +41,84 @@ export class DashboardComponent implements OnInit {
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: true });
 
     this._IDCLIENTE = localStorage.getItem("IDCLIENTE"); // PARAMETRO GLOBAL.
+    this._IDUSUARIO = localStorage.getItem("IDUSUARIO"); // PARAMETRO GLOBAL.
 
-    this.getRows();
+    this._servicios.wsGeneral("getFiltroSucursales", { idcliente: this._IDCLIENTE, valor: "0" })
+      .subscribe(x => {
+        this.filtroSucursales = x;
+        this.filtroSucursales.forEach(item => {
+          item.ROWSELECT = true;
+        });
+
+        this._servicios.wsGeneral("getFiltroTemas", { idcliente: this._IDCLIENTE, valor: "0" })
+          .subscribe(x => {
+            this.filtroTemas = x;
+            this.filtroTemas.forEach(item => {
+              item.ROWSELECT = true;
+            });
+            this.getRows();
+          }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Filtros Temas"));
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Filtros Sucursales"));
   }
 
   getRows() {
+    let _param: Param = {
+      idcliente: this._IDCLIENTE,
+      valor: "0",
+      sucursales: [],
+      temas: []
+    };
 
-    if (this.valorBuscar == "")
-      this.valorBuscar = "0";
+    this.filtroSucursales.forEach(x => {
+      if(x.ROWSELECT) 
+        _param.sucursales.push(x.IDSUCURSAL);
+    });
 
-    this._servicios.wsGeneral("getDashBoardIndicadores", { idcliente: this._IDCLIENTE, valor: this.valorBuscar })
+    this.filtroTemas.forEach(x => {
+      if(x.ROWSELECT) 
+        _param.temas.push(x.IDTIPO);
+    });
+
+    console.log(_param);
+
+    this._servicios.wsGeneral("getDashBoardIndicadores", _param)
       .subscribe(x => {
         this.INDICADORES = x;
 
-      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "DashBoard"));
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "IndicadorByboxes"));
 
-    this._servicios.wsGeneral("getIndicadorByUser", { idcliente: this._IDCLIENTE, valor: this.valorBuscar })
+    this._servicios.wsGeneral("getTicketsDashBoard", _param)
       .subscribe(x => {
-        this.rows = x;
-        this.indicadorByUsuario = this.rows.filter(x => x.ROL == "U");
-        this.indicadorByAsignado = this.rows.filter(x => x.ROL == "A");
+        this.ticketsRows = x;
+        this.ticketsRows.forEach(x => {
+          if (x.ESTATUS == "O")
+            x.ESTATUS = "ABIERTO";
+          if (x.ESTATUS == "A")
+            x.ESTATUS = "ASIGNADO";
+          if (x.ESTATUS == "C")
+            x.ESTATUS = "CERRADO";
+          if (x.ESTATUS == "R")
+            x.ESTATUS = "RE-ABIERTO";
+        });
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Tickes tabla"));
 
-      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "DashBoard"));
+    this._servicios.wsGeneral("getGrupoSucursales", _param)
+      .subscribe(x => {
+        this.grupoSucRows = x;
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "IndicadorByGrupoSuc"));
+
+    this._servicios.wsGeneral("getGrupoTemas", _param)
+      .subscribe(x => {
+        this.grupoTemasRows = x;
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "IndicadorByGrupoTemas"));
+
   }
 
+  editRow(ticket: any) {
+    localStorage.setItem("_IDTICKET", ticket.IDTICKET);
+    localStorage.setItem("_IDUSUARIO", this._IDUSUARIO);
+    localStorage.setItem("_ACCION", "E");
+    this._router.navigate(['/ticketflow']);
+  }
 
 }
