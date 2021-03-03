@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
 import { NgxConfirmBoxService } from 'ngx-confirm-box';
-declare const moment: any;
+import { DomSanitizer } from "@angular/platform-browser";
 
+
+declare const moment: any;
+declare var $:any;
 
 @Component({
   selector: 'app-ticketflowdet',
   templateUrl: './ticketflowdet.component.html',
   styleUrls: ['./ticketflowdet.component.css']
 })
+
 export class TicketflowdetComponent implements OnInit {
   // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
   bgColor = 'rgba(0,0,0,0.5)'; // overlay background color
@@ -22,8 +25,15 @@ export class TicketflowdetComponent implements OnInit {
   confirmOkaytext = "Eliminar";
   // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
 
+  hdTICKETDET: any = {
+    IDTICKETDET: null,
+    IDTICKET: "",
+    IDLCIENTE: 0,
+    IDUSUARIO: "",
+    DESCTICKETDET: "",
+    FECHA: new Date()
+  };
 
-  datos: any = null;
   _TITULO: string = "TICKET NOTA."
   _IDCLIENTE: string = "";
   _IDTICKET: string = "";
@@ -32,8 +42,6 @@ export class TicketflowdetComponent implements OnInit {
   _ESTATUS: string = "O";
   NOTAS: any[] = null;
 
-  validaNota: FormGroup;
-
   subscription: Subscription;
 
   fechaActual: Date = new Date();
@@ -41,7 +49,8 @@ export class TicketflowdetComponent implements OnInit {
   constructor(private _servicios: ServiciosService,
     private _router: Router,
     private _toastr: ToastrService,
-    private confirmBox: NgxConfirmBoxService) { }
+    private confirmBox: NgxConfirmBoxService,
+    private sanitizer: DomSanitizer) { }
 
 
   ngOnInit(): void {
@@ -54,25 +63,26 @@ export class TicketflowdetComponent implements OnInit {
 
     this._TITULO = this._TITULO + " " + this._IDTICKET;
 
+    this.hdTICKETDET.IDTICKET = this._IDTICKET;
+    this.hdTICKETDET.IDUSUARIO = this._IDUSUARIO;
+    this.hdTICKETDET.IDCLIENTE = this._IDCLIENTE;
+
     this.notasHistorial();
 
-    this.validaNota = new FormGroup({
-      IDTICKETDET: new FormControl({ value: null, disabled: true }, [Validators.required]),
-      IDTICKET: new FormControl({ value: this._IDTICKET, disabled: true }, [Validators.required]),
-      IDCLIENTE: new FormControl({ value: this._IDCLIENTE, disabled: true }, [Validators.required]),
-      IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
-      DESCTICKETDET: new FormControl({ value: "", disabled: false }, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-      FECHA: new FormControl({ value: this.fechaActual, disabled: true }, [Validators.required])
-    });
+    $('#DESCTICKETDET').summernote()
 
   }
 
   // ACCION DEL BOTON - GUARDAR.
   guardar() {
-    this._servicios.wsGeneral("insTicketDet", this.validaNota.getRawValue())
+
+    this.hdTICKETDET.DESCTICKETDET = $("#DESCTICKETDET").val();
+
+    console.log(this.hdTICKETDET);
+
+    this._servicios.wsGeneral("insTicketDet", this.hdTICKETDET)
       .subscribe(resp => {
         this._toastr.success(resp, "Ticket");
-        this.resetTheForm();
         this.notasHistorial();
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
@@ -88,7 +98,7 @@ export class TicketflowdetComponent implements OnInit {
 
     this._servicios.wsGeneral("updTICKET", param)
       .subscribe(resp => {
-        this._servicios.wsGeneral("insTicketDet", this.validaNota.getRawValue())
+        this._servicios.wsGeneral("insTicketDet", this.hdTICKETDET)
           .subscribe(resp => {
             this._toastr.success(resp, "Ticket");
             this._router.navigate(['/tickets']);
@@ -110,7 +120,7 @@ export class TicketflowdetComponent implements OnInit {
 
     this._servicios.wsGeneral("updTICKET", param)
       .subscribe(resp => {
-        this._servicios.wsGeneral("insTicketDet", this.validaNota.getRawValue())
+        this._servicios.wsGeneral("insTicketDet", this.hdTICKETDET)
           .subscribe(resp => {
             this._toastr.success(resp, "Ticket");
             this._router.navigate(['/tickets']);
@@ -121,28 +131,15 @@ export class TicketflowdetComponent implements OnInit {
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
   }
 
-  resetTheForm(): void {
-    this.validaNota.controls['DESCTICKETDET'].reset()
-  }
-
   delDatos(showConfirm: boolean): void {
 
     if (showConfirm) {
-      this._servicios.wsGeneral("delTicket", this.validaNota.getRawValue())
+      this._servicios.wsGeneral("delTicket", this.hdTICKETDET)
         .subscribe(resp => {
           this._toastr.success(resp, "Ticket");
         },
           error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
     }
-  }
-
-  // validacion de campos generales.
-  validaCampo(campo: string): boolean {
-    return this._servicios.isValidField(this.validaNota, campo);
-  }
-
-  mensajeErrorCampo(campo: string): string {
-    return this._servicios.getErrorMessageField(this.validaNota, campo);
   }
 
   notasHistorial() {
@@ -151,4 +148,9 @@ export class TicketflowdetComponent implements OnInit {
         this.NOTAS = x;
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Notas"));
   }
+
+  transformaHtml(valor: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(valor);
+  }
+
 }

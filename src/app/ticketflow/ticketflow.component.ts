@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
 import { NgxConfirmBoxService } from 'ngx-confirm-box';
 declare const moment: any;
+declare var $: any;
 
 
 @Component({
@@ -83,6 +84,8 @@ export class TicketflowComponent implements OnInit {
     private confirmBox: NgxConfirmBoxService) { }
 
   ngOnInit(): void {
+    
+
     this._IDCLIENTE = localStorage.getItem("IDCLIENTE"); // VARIABLE PARAMETRO.
     this._IDTICKET = localStorage.getItem("_IDTICKET"); // VARIABLE PARAMETRO.
     this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
