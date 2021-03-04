@@ -7,32 +7,46 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
+
         <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-secondary">
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <label for="DESCTICKETDET">NOTA DE TRABAJO</label>
-                                <textarea class="form-control form-control-sm" id="DESCTICKETDET"
-                                    rows="3" [(ngModel)]="hdTICKETDET.DESCTICKETDET" name="DESCTICKETDET"></textarea>
-                            </div>
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-10">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Nota de trabajo</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="mailbox-read-message">
+                            <textarea class="form-control form-control-sm" id="DESCTICKETDET" rows="3"
+                                [(ngModel)]="hdTICKETDET.DESCTICKETDET" name="DESCTICKETDET"></textarea>
+                        </div>
+                        <!-- /.mailbox-read-message -->
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <div class="row">
                             <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
-                                <button type="button"  (click)="guardar()"
+                                <button type="button" (click)="guardar()"
                                     class="btn btn-primary float-right botonSize">Publicar nota</button>
                             </div>
                             <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
-                                <button type="button"  (click)="cerrarTicket()"
+                                <button type="button" (click)="cerrarTicket()"
                                     class="btn btn-primary float-right botonSize">Cerrar ticket</button>
                             </div>
                             <div *ngIf="_ESTATUS == 'CERRADO'" class="col-4 col-md-2">
-                                <button type="button"  (click)="reabrirTicket()"
+                                <button type="button" (click)="reabrirTicket()"
                                     class="btn btn-primary float-right botonSize">Re-abrir ticket</button>
                             </div>
                         </div>
@@ -41,29 +55,46 @@
                 </div>
                 <!-- /.card -->
             </div>
+            <!-- /.col -->
         </div>
 
-        <h3>Historial notas</h3>
-        <div *ngFor="let item of NOTAS" class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h6 class="card-title">FECHA: {{item.FECHA | date: "dd/MM/yyyy"}} / USUARIO: {{item.IDUSUARIO}}
-                        </h6>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
-                        <div class="col-12">
-                            
-                                    <div [innerHTML]="transformaHtml(item.DESCTICKETDET)"></div>
+        <h3 align="center">Historial notas</h3>
 
+        <div *ngFor="let item of NOTAS" class="row">
+
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-10">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">FECHA: {{item.FECHA | date: "dd/MM/yyyy h:mm a"}} - USUARIO: {{item.IDUSUARIO}}
+                        </h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                     </div>
-
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="mailbox-read-message" style="background-color: #E5E7E9; color: gray;">
+                            <div [innerHTML]="transformaHtml(item.DESCTICKETDET)"></div>
+                        </div>
+                        <!-- /.mailbox-read-message -->
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
+            <!-- /.col -->
+
+
+
         </div>
     </div>
 </section>

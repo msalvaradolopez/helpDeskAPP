@@ -69,7 +69,7 @@ export class TicketflowdetComponent implements OnInit {
 
     this.notasHistorial();
 
-    $('#DESCTICKETDET').summernote()
+    $('#DESCTICKETDET').summernote();
 
   }
 
@@ -78,17 +78,29 @@ export class TicketflowdetComponent implements OnInit {
 
     this.hdTICKETDET.DESCTICKETDET = $("#DESCTICKETDET").val();
 
-    console.log(this.hdTICKETDET);
+    if(this.hdTICKETDET.DESCTICKETDET == ""){
+      this._toastr.warning("Capture Nota de trabajo.", "Ticket");
+      return;
+    }
 
     this._servicios.wsGeneral("insTicketDet", this.hdTICKETDET)
       .subscribe(resp => {
         this._toastr.success(resp, "Ticket");
+        this.hdTICKETDET.DESCTICKETDET = "";
+        $("#DESCTICKETDET").summernote('reset');
         this.notasHistorial();
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Ticket"));
   }
 
   cerrarTicket() {
+
+    this.hdTICKETDET.DESCTICKETDET = $("#DESCTICKETDET").val();
+
+    if(this.hdTICKETDET.DESCTICKETDET == ""){
+      this._toastr.warning("Capture Nota de trabajo.", "Ticket");
+      return;
+    }
 
     let param = {
       IDTICKET: this._IDTICKET,
@@ -100,6 +112,8 @@ export class TicketflowdetComponent implements OnInit {
       .subscribe(resp => {
         this._servicios.wsGeneral("insTicketDet", this.hdTICKETDET)
           .subscribe(resp => {
+            this.hdTICKETDET.DESCTICKETDET = "";
+            $("#DESCTICKETDET").summernote('reset');
             this._toastr.success(resp, "Ticket");
             this._router.navigate(['/tickets']);
           },

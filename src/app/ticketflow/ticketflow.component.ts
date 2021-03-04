@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
 import { NgxConfirmBoxService } from 'ngx-confirm-box';
+import { DomSanitizer } from "@angular/platform-browser";
 declare const moment: any;
 declare var $: any;
 
@@ -81,7 +82,8 @@ export class TicketflowComponent implements OnInit {
   constructor(private _servicios: ServiciosService,
     private _router: Router,
     private _toastr: ToastrService,
-    private confirmBox: NgxConfirmBoxService) { }
+    private confirmBox: NgxConfirmBoxService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     
@@ -217,5 +219,9 @@ export class TicketflowComponent implements OnInit {
     localStorage.removeItem("_ACCION");
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
     this.subscription.unsubscribe();
+  }
+
+  transformaHtml(valor: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(valor);
   }
 }
