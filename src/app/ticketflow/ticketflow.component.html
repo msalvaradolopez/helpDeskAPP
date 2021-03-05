@@ -1,16 +1,4 @@
 <style>
-    a {
-        line-height: 1em;
-        display: inline-block;
-        text-decoration: none;
-        padding: 10px;
-        margin: 5px;
-    }
-
-    .trow {
-        transition: transform .2s;
-    }
-
     .trowColorLetra {
         color: gray;
         font-size: calc(.5em + .5vw);
@@ -34,53 +22,83 @@
     <div class="container-fluid">
         <br>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-1">
 
             </div>
-            <div class="col-md-10">
-                <div class="card card-info" style="background-color: #E5E7E9;">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ _TITULO }}</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
+            <div class="col-10">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action trow">
+                        <div class="row">
+                            <strong>{{ _TITULO }}</strong>
                         </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body p-0 trowColorLetra">
-                        <div class="mailbox-read-info">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    USUARIO: {{datos.NOMUSUARIO}}
-                                </div>
-                                <div class="col-md-3">
-                                    ESTATUS: {{datos.NOMESTATUS}}
-                                </div>
-                                <div class="col-md-3">
-                                    TEMA: {{datos.NOMTIPO}}
-                                </div>
-                                <div class="col-md-3">
-                                    FECHA: {{datos.FECHA | date: "dd/MM/yyyy h:mm a"}}
-                                </div>
+                        <hr>
+                        <div class="row trowColorLetra">
+                            <div class="col-md-3">
+                                USUARIO: {{datos.NOMUSUARIO}}
+                            </div>
+                            <div class="col-md-3">
+                                ESTATUS: {{datos.NOMESTATUS}}
+                            </div>
+                            <div class="col-md-3">
+                                TEMA: {{datos.NOMTIPO}}
+                            </div>
+                            <div class="col-md-3">
+                                FECHA: {{datos.FECHA | date: "dd/MM/yyyy h:mm a"}}
                             </div>
                         </div>
-                        <!-- /.mailbox-read-info -->
-                        <div class="mailbox-read-message">
-                            <div [innerHTML]="transformaHtml(datos.DESCTICKET)"></div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-2">
+                                <label for="IDUSUARIO">PRIORIDAD</label>
+                                <!-- select -->
+                                <select class="form-control form-control-sm" id="IDPRIORIDAD">
+                                    <option [value]="item.ID" *ngFor="let item of prioridades">
+                                        {{item.NOMBRE}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="IDTIPO">TEMA</label>
+                                <!-- select -->
+                                <select class="form-control form-control-sm" id="IDTIPO">
+                                    <option [value]="item.IDTIPO" *ngFor="let item of CATEGORIAS">
+                                        {{item.NOMTIPO}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="IDTIPO">ASIGNADO A</label>
+                                <!-- select -->
+                                <select class="form-control form-control-sm" id="IDUSUARIO">
+                                    <option [value]="item.IDUSUARIO" *ngFor="let item of ASIGNADOS">
+                                        {{item.NOMUSUARIO}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="IDTIPO">ORIGEN</label>
+                                <!-- select -->
+                                <select class="form-control form-control-sm" id="ORIGEN">
+                                    <option [value]="item.ORIGEN" *ngFor="let item of origenes">
+                                        {{item.NOMBRE}}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
-                        <!-- /.mailbox-read-message -->
-                    </div>
-                    <!-- /.card-body -->
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-2">
+                                Descripción :
+                            </div>
+                            <div class="col-md-10">
+                                <div [innerHTML]="transformaHtml(datos.DESCTICKET)"></div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <!-- /.card -->
             </div>
-            <!-- /.col -->
         </div>
+
 
     </div>
 

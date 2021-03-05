@@ -1,4 +1,12 @@
 <style>
+    a {
+        line-height: 1em;
+        display: inline-block;
+        text-decoration: none;
+        padding: 10px;
+        margin: 5px;
+    }
+
     .botonSize {
         width: 100%;
     }
@@ -7,35 +15,23 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-
+        <br>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-1">
 
             </div>
-            <div class="col-md-10">
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Nota de trabajo</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
+            <div class="col-10">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action trow">
+                        <div class="row">
+                            <strong>Nota de trabajo</strong>
                         </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body p-0">
-                        <div class="mailbox-read-message">
+                        <hr>
+                        <div>
                             <textarea class="form-control form-control-sm" id="DESCTICKETDET" rows="3"
                                 [(ngModel)]="hdTICKETDET.DESCTICKETDET" name="DESCTICKETDET"></textarea>
                         </div>
-                        <!-- /.mailbox-read-message -->
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
+                        <hr>
                         <div class="row">
                             <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
                                 <button type="button" (click)="guardar()"
@@ -50,50 +46,44 @@
                                     class="btn btn-primary float-right botonSize">Re-abrir ticket</button>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.card-footer -->
+                    </a>
                 </div>
-                <!-- /.card -->
             </div>
-            <!-- /.col -->
+
         </div>
 
         <h3 align="center">Historial notas</h3>
-
-        <div *ngFor="let item of NOTAS" class="row">
-
+        <div class="row">
             <div class="col-md-1">
 
             </div>
             <div class="col-md-10">
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">FECHA: {{item.FECHA | date: "dd/MM/yyyy h:mm a"}} - USUARIO: {{item.IDUSUARIO}}
-                        </h3>
+                
+                    <div class="row" *ngFor="let item of NOTAS">
+                        <a class="list-group-item list-group-item-action">
+                            <div class="row">
+                                <strong>FECHA: {{item.FECHA | date: "dd/MM/yyyy h:mm a"}} - USUARIO:
+                                    {{item.IDUSUARIO}}</strong>
+                            </div>
+                            <hr>
+                            <div>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <strong>Descripción:</strong>
+                                    </div>
+                                    <div class="col-10">
+                                        <div [innerHTML]="transformaHtml(item.DESCTICKETDET)"></div>
+                                    </div>
+                                </div>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
+                            </div>
+                        </a>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body p-0">
-                        <div class="mailbox-read-message" style="background-color: #E5E7E9; color: gray;">
-                            <div [innerHTML]="transformaHtml(item.DESCTICKETDET)"></div>
-                        </div>
-                        <!-- /.mailbox-read-message -->
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+
+                
+
             </div>
             <!-- /.col -->
-
-
 
         </div>
     </div>
