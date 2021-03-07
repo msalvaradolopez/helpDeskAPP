@@ -141,6 +141,8 @@ export class TicketflowComponent implements OnInit {
             datos.NOMESTATUS = "CERRADA";
           if (datos.ESTATUS == "R")
             datos.NOMESTATUS = "RE-ABIERTA";
+
+            console.log(this.datos);
         }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"));
     } else {
       this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: true, BUSCAR: false });

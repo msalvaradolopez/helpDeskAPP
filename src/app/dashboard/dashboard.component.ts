@@ -79,8 +79,6 @@ export class DashboardComponent implements OnInit {
         _param.temas.push(x.IDTIPO);
     });
 
-    console.log(_param);
-
     this._servicios.wsGeneral("getDashBoardIndicadores", _param)
       .subscribe(x => {
         this.INDICADORES = x;

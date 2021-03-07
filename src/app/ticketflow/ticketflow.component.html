@@ -49,9 +49,9 @@
                         <hr>
                         <div class="row">
                             <div class="col-2">
-                                <label for="IDUSUARIO">PRIORIDAD</label>
+                                <label for="IDPRIORIDAD">PRIORIDAD</label>
                                 <!-- select -->
-                                <select class="form-control form-control-sm" id="IDPRIORIDAD">
+                                <select class="form-control form-control-sm" id="IDPRIORIDAD" [(ngModel)]="datos.IDPRIORIDAD">
                                     <option [value]="item.ID" *ngFor="let item of prioridades">
                                         {{item.NOMBRE}}
                                     </option>
@@ -60,16 +60,16 @@
                             <div class="col-3">
                                 <label for="IDTIPO">TEMA</label>
                                 <!-- select -->
-                                <select class="form-control form-control-sm" id="IDTIPO">
+                                <select class="form-control form-control-sm" id="IDTIPO" [(ngModel)]="datos.IDTIPO">
                                     <option [value]="item.IDTIPO" *ngFor="let item of CATEGORIAS">
                                         {{item.NOMTIPO}}
                                     </option>
                                 </select>
                             </div>
                             <div class="col-3">
-                                <label for="IDTIPO">ASIGNADO A</label>
+                                <label for="IDUSUARIO">ASIGNADO A</label>
                                 <!-- select -->
-                                <select class="form-control form-control-sm" id="IDUSUARIO">
+                                <select class="form-control form-control-sm" id="IDUSUARIO" [(ngModel)]="datos.ASIGNADOA">
                                     <option [value]="item.IDUSUARIO" *ngFor="let item of ASIGNADOS">
                                         {{item.NOMUSUARIO}}
                                     </option>
@@ -78,8 +78,8 @@
                             <div class="col-3">
                                 <label for="IDTIPO">ORIGEN</label>
                                 <!-- select -->
-                                <select class="form-control form-control-sm" id="ORIGEN">
-                                    <option [value]="item.ORIGEN" *ngFor="let item of origenes">
+                                <select class="form-control form-control-sm" id="ORIGEN" [(ngModel)]="datos.ORIGEN">
+                                    <option [value]="item.ID" *ngFor="let item of origenes">
                                         {{item.NOMBRE}}
                                     </option>
                                 </select>

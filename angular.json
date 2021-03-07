@@ -34,7 +34,7 @@
               "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
               "node_modules/admin-lte/plugins/jqvmap/jqvmap.min.css",
               "node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css",
-              "node_modules/admin-lte/plugins/summernote/summernote-bs4.css",
+              "node_modules/summernote/dist/summernote-lite.min.css",
               "node_modules/admin-lte/docs_html/assets/css/adminlte.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
@@ -51,7 +51,7 @@
               "node_modules/admin-lte/plugins/moment/moment.min.js",
               "node_modules/admin-lte/plugins/daterangepicker/daterangepicker.js",
               "node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
-              "node_modules/admin-lte/plugins/summernote/summernote-bs4.min.js",
+              "node_modules/summernote/dist/summernote-lite.min.js",
               "node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.js",
               "node_modules/admin-lte/dist/js/adminlte.js",
               "node_modules/admin-lte/dist/js/demo.js"

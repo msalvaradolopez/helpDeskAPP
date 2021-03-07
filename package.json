@@ -21,9 +21,12 @@
     "@angular/router": "~9.1.1",
     "@kolkov/angular-editor": "^1.1.4",
     "admin-lte": "^3.1.0-rc",
+    "jquery": "^3.6.0",
     "ngx-confirm-box": "0.0.3",
+    "ngx-summernote": "^0.8.0",
     "ngx-toastr": "^13.2.0",
     "rxjs": "~6.5.4",
+    "summernote": "^0.8.18",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

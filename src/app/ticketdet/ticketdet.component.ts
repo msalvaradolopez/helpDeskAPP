@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
 import { NgxConfirmBoxService } from 'ngx-confirm-box';
 declare const moment: any;
-
+declare var $: any;
 
 @Component({
   selector: 'app-ticketdet',
@@ -61,6 +61,8 @@ export class TicketdetComponent implements OnInit {
     this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
     this._ACCION = localStorage.getItem("_ACCION");
 
+    $('#DESCTICKET').summernote();
+
 
     this.validaCaptura = new FormGroup({
       IDTICKET: new FormControl({ value: "", disabled: true }, [Validators.required]),
@@ -68,12 +70,12 @@ export class TicketdetComponent implements OnInit {
       IDTIPO: new FormControl("", [Validators.required]),
       IDUSUARIO: new FormControl({ value: this._IDUSUARIO, disabled: true }, [Validators.required]),
       ASUNTO: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
-      DESCTICKET: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      DESCTICKET: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(2000)]),
       ESTATUS: new FormControl({ value: "O", disabled: true }, [Validators.required]),
       ASIGNADOA: new FormControl(null),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
-      FECHA: new FormControl({ value: this.fechaActual,  disabled: true }, [Validators.required])
+      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"),  disabled: true }, [Validators.required])
     });
 
     this.subscription = this._servicios.navbarRespIcono$

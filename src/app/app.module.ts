@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from "ngx-toastr";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxConfirmBoxModule, NgxConfirmBoxService } from 'ngx-confirm-box';
+import { NgxSummernoteModule } from 'ngx-summernote';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -64,7 +65,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
       progressAnimation: "increasing",
       
     }),
-    NgxConfirmBoxModule
+    NgxConfirmBoxModule,
+    NgxSummernoteModule
   ],
   providers: [NgxConfirmBoxService],
   bootstrap: [AppComponent]
