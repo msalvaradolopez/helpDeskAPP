@@ -3,13 +3,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Inbox</h1>
-      </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Inbox</li>
-        </ol>
+        <h1>Dashboard</h1>
       </div>
     </div>
   </div><!-- /.container-fluid -->
@@ -137,123 +131,164 @@
       </div>
       <!-- /.col -->
 
-      <div class="col-5">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="ion ion-clipboard mr-1"></i>
-              Tickets por Sucursal/Tema.
-            </h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <ul class="todo-list" data-widget="todo-list">
-              <li *ngFor="let itemGpoSucursal of grupoSucRows">
-                <!-- todo text -->
-                <span class="text">{{itemGpoSucursal.NOMSUCURSAL}}</span>
-                <!-- Emphasis label -->
-                <small class="badge badge-info"><i class="far fa-clock"></i> {{itemGpoSucursal.CTDSUCURSAL}}</small>
-                <ul class="todo-list" data-widget="todo-list">
-                  <li *ngFor="let itemGpoTemas of itemGpoSucursal.gpoTemas">
-                    <!-- todo text -->
-                    <span class="text">{{itemGpoTemas.NOMTIPO}}</span>
-                    <!-- Emphasis label -->
-                    <small class="badge badge-info"><i class="far fa-clock"></i> {{itemGpoTemas.CTDTEMA}}</small>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /.card -->
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Tickets: estatus por Sucursal / Tema</h3>
 
-      </div>
-
-      <div class="col-5">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="ion ion-clipboard mr-1"></i>
-              Tickets por Tema/Sucursal.
-            </h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <ul class="todo-list" data-widget="todo-list">
-              <li *ngFor="let itemGpoTemas of grupoTemasRows">
-                <!-- todo text -->
-                <span class="text">{{itemGpoTemas.NOMTIPO}}</span>
-                <!-- Emphasis label -->
-                <small class="badge badge-info"><i class="far fa-clock"></i> {{itemGpoTemas.CTDTEMA}}</small>
-                <ul class="todo-list" data-widget="todo-list">
-                  <li *ngFor="let itemGpoSucursal of itemGpoTemas.gpoSuc">
-                    <!-- todo text -->
-                    <span class="text">{{itemGpoSucursal.NOMSUCURSAL}}</span>
-                    <!-- Emphasis label -->
-                    <small class="badge badge-info"><i class="far fa-clock"></i>
-                      {{itemGpoSucursal.CTDSUCURSAL}}</small>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /.card -->
-
-      </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <!-- TABLE: LATEST ORDERS -->
-        <div class="card">
-          <div class="card-header border-transparent">
-            <h3 class="card-title">Tickets</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <tr>
+                        <th>Sucursal</th>
+                        <th>Tema</th>
+                        <th>ABIERTO</th>
+                        <th>ASIGNADO</th>
+                        <th>RE-ABIERTO</th>
+                        <th>TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of grupoSucRows">
+                        <td *ngIf="item.NOMTIPO == ''"><strong>{{item.NOMSUCURSAL}}</strong></td>
+                        <td *ngIf="item.NOMTIPO != ''"></td>
+                        <td>{{item.NOMTIPO}}</td>
+                        <td>{{item.ABIERTO}}</td>
+                        <td>{{item.ASIGNADO}}</td>
+                        <td>{{item.REABIERTO}}</td>
+                        <td *ngIf="item.NOMTIPO == ''">{{item.TOTAL}}</td>
+                        <td *ngIf="item.NOMTIPO != ''"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
           </div>
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th># ticket</th>
-                    <th>Asunto</th>
-                    <th>Usuario</th>
-                    <th>Fecha</th>
-                    <th>Estatus</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of ticketsRows">
-                    <td><a [routerLink]="[]" (click)="editRow(item)">{{item.IDTICKET}}</a></td>
-                    <td>{{item.ASUNTO}}</td>
-                    <td>{{item.NOMUSUARIO}}</td>
-                    <td>{{item.FECHA | date: "dd/MM/yyyy h:mm a"}}</td>
-                    <td>
-                      <span style="width: 70px; padding: 4px;"
-                        [ngClass]="item.ESTATUS == 'ASIGNADO' ? 'badge badge-pill badge-success' : item.ESTATUS == 'CERRADO' ? 'badge badge-pill badge-danger' : item.ESTATUS == 'RE-ABIERTO' ? 'badge badge-pill badge-warning' : 'badge badge-pill badge-primary'">
-                        {{item.ESTATUS}}
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.table-responsive -->
-          </div>
-          <!-- /.card-body -->
         </div>
-        <!-- /.card -->
+        <div class="row">
+          <div class="col-md-12">
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Tickets: estatus por Tema / Sucursal</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <tr>
+                        <th>Tema</th>
+                        <th>Sucursal</th>
+                        <th>ABIERTO</th>
+                        <th>ASIGNADO</th>
+                        <th>RE-ABIERTO</th>
+                        <th>TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of grupoTemasRows">
+                        <td *ngIf="item.NOMSUCURSAL == ''"><strong>{{item.NOMTIPO}}</strong></td>
+                        <td *ngIf="item.NOMSUCURSAL != ''"></td>
+                        <td>{{item.NOMSUCURSAL}}</td>
+                        <td>{{item.ABIERTO}}</td>
+                        <td>{{item.ASIGNADO}}</td>
+                        <td>{{item.REABIERTO}}</td>
+                        <td *ngIf="item.NOMSUCURSAL == ''">{{item.TOTAL}}</td>
+                        <td *ngIf="item.NOMSUCURSAL != ''"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Tickets</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <tr>
+                        <th># ticket</th>
+                        <th>Asunto</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Estatus</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of ticketsRows">
+                        <td><a [routerLink]="[]" (click)="editRow(item)">{{item.IDTICKET}}</a></td>
+                        <td>{{item.ASUNTO}}</td>
+                        <td>{{item.NOMUSUARIO}}</td>
+                        <td>{{item.FECHA | date: "dd/MM/yyyy h:mm a"}}</td>
+                        <td>
+                          <span style="width: 70px; padding: 4px;"
+                            [ngClass]="item.ESTATUS == 'ASIGNADO' ? 'badge badge-pill badge-success' : item.ESTATUS == 'CERRADO' ? 'badge badge-pill badge-danger' : item.ESTATUS == 'RE-ABIERTO' ? 'badge badge-pill badge-warning' : 'badge badge-pill badge-primary'">
+                            {{item.ESTATUS}}
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

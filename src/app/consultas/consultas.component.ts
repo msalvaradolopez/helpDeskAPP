@@ -7,38 +7,29 @@ import { ToastrService } from 'ngx-toastr';
 import { Param } from '../param';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-consultas',
+  templateUrl: './consultas.component.html',
+  styleUrls: ['./consultas.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class ConsultasComponent implements OnInit {
 
   valorBuscar: string = "";
   _IDCLIENTE: string = "";
   _IDUSUARIO: string = "";
 
-  INDICADORES: any = {
-    TOTAL: 0,
-    SINASIGNAR: 0,
-    ATRASADOS: 0,
-    REABIERTOS: 0
-  };
 
-  rows: any[] = null;
+  porcBySuc: any[] = null;
+  porcByTema: any[] = null;
   filtrosSucursal: any[] = null;
   filtrosTema: any[] = null;
-  ticketsRows: any[] = null;
-  grupoSucRows: any[] = null;
-  grupoTemasRows: any[] = null;
   filtroSucursales: any[] = null;
   filtroTemas: any[] = null;
-
-  subscription: Subscription;
+  ticketsRows: any[] = null;
 
   constructor(private _servicios: ServiciosService, private _router: Router, private _toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: true });
+    this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
 
     this._IDCLIENTE = localStorage.getItem("IDCLIENTE"); // PARAMETRO GLOBAL.
     this._IDUSUARIO = localStorage.getItem("IDUSUARIO"); // PARAMETRO GLOBAL.
@@ -70,22 +61,28 @@ export class DashboardComponent implements OnInit {
     };
 
     this.filtroSucursales.forEach(x => {
-      if(x.ROWSELECT) 
+      if (x.ROWSELECT)
         _param.sucursales.push(x.IDSUCURSAL);
     });
 
     this.filtroTemas.forEach(x => {
-      if(x.ROWSELECT) 
+      if (x.ROWSELECT)
         _param.temas.push(x.IDTIPO);
     });
 
-    this._servicios.wsGeneral("getDashBoardIndicadores", _param)
+    this._servicios.wsGeneral("porcBySuc", _param)
       .subscribe(x => {
-        this.INDICADORES = x;
+        this.porcBySuc = x;
 
-      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "IndicadorByboxes"));
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "porcBySuc"));
 
-    this._servicios.wsGeneral("getTicketsDashBoard", _param)
+    this._servicios.wsGeneral("porcByTema", _param)
+      .subscribe(x => {
+        this.porcByTema = x;
+
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "porcByTema"));
+
+    this._servicios.wsGeneral("getTicketsByDashBoard", _param)
       .subscribe(x => {
         this.ticketsRows = x;
         this.ticketsRows.forEach(x => {
@@ -99,18 +96,6 @@ export class DashboardComponent implements OnInit {
             x.ESTATUS = "RE-ABIERTO";
         });
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Tickes tabla"));
-
-      // getGrupoSucursales
-    this._servicios.wsGeneral("ticketsBySucTemaList", _param)
-      .subscribe(x => {
-        this.grupoSucRows = x;
-      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "IndicadorByGrupoSuc"));
-
-    this._servicios.wsGeneral("ticketsByTemaSucList", _param)
-      .subscribe(x => {
-        this.grupoTemasRows = x;
-      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "IndicadorByGrupoTemas"));
-
   }
 
   editRow(ticket: any) {
@@ -119,5 +104,4 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem("_ACCION", "E");
     this._router.navigate(['/ticketflow']);
   }
-
 }

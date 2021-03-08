@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
   menuItems: any[] = [];
   menu: any[] = [
     { IDMENU: "dashboard", NOMBRE: "Dashboard", ICONO: "nav-icon fas fa-chart-line", ROL: "A" },
+    { IDMENU: "consultas", NOMBRE: "Consultas", ICONO: "nav-icon fas fa-clipboard-list", ROL: "A" },
     { IDMENU: "params", NOMBRE: "Parametros", ICONO: "nav-icon fas fa-cog", ROL: "A" },
     { IDMENU: "sucursales", NOMBRE: "Sucursales", ICONO: "nav-icon fas fa-store", ROL: "A" },
     { IDMENU: "deptos", NOMBRE: "Departamentos", ICONO: "nav-icon fas fa-layer-group", ROL: "A" },
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit{
     { IDMENU: "tickets", NOMBRE: "Tickets", ICONO: "nav-icon fas fa-clipboard-list", ROL: "A" },
     { IDMENU: "login", NOMBRE: "Login", ICONO: "nav-icon fas fa-key", ROL: "A" },
     { IDMENU: "dashboard", NOMBRE: "Dashboard", ICONO: "nav-icon fas fa-chart-line", ROL: "S" },
+    { IDMENU: "consultas", NOMBRE: "Consultas", ICONO: "nav-icon fas fa-clipboard-list", ROL: "S" },
     { IDMENU: "slas", NOMBRE: "SLA configuración", ICONO: "nav-icon fas fa-ruler", ROL: "S" },
     { IDMENU: "tickets", NOMBRE: "Tickets", ICONO: "nav-icon fas fa-clipboard-list", ROL: "S" },
     { IDMENU: "login", NOMBRE: "Login", ICONO: "nav-icon fas fa-key", ROL: "S" },

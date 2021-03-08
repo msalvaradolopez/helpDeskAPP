@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ConsultasComponent } from './consultas/consultas.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DeptodetComponent } from './deptodet/deptodet.component';
 import { DeptosComponent } from './deptos/deptos.component';
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: "params", component: ParamsComponent },
   { path: "paramdet", component: ParamdetComponent },
   { path: "dashboard", component: DashboardComponent },
+  { path: "consultas", component: ConsultasComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent }
 ];
