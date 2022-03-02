@@ -1,90 +1,97 @@
 <style>
-    a {
-        line-height: 1em;
-        display: inline-block;
-        text-decoration: none;
-        padding: 10px;
-        margin: 5px;
-    }
+  a {
+    line-height: 1em;
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px;
+    margin: 5px;
+  }
 
-    .botonSize {
-        width: 100%;
-    }
+  .botonSize {
+    width: 100%;
+  }
 </style>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <br>
-        <div class="row">
-            <div class="col-1">
-
+  <div class="container-fluid">
+    <br />
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action trow">
+            <div class="row">
+              <strong>Nota de trabajo</strong>
             </div>
-            <div class="col-10">
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action trow">
-                        <div class="row">
-                            <strong>Nota de trabajo</strong>
-                        </div>
-                        <hr>
-                        <div>
-                            <textarea class="form-control form-control-sm" id="DESCTICKETDET" rows="3"
-                                [(ngModel)]="hdTICKETDET.DESCTICKETDET" name="DESCTICKETDET"></textarea>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
-                                <button type="button" (click)="guardar()"
-                                    class="btn btn-primary float-right botonSize">Publicar nota</button>
-                            </div>
-                            <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
-                                <button type="button" (click)="cerrarTicket()"
-                                    class="btn btn-primary float-right botonSize">Cerrar ticket</button>
-                            </div>
-                            <div *ngIf="_ESTATUS == 'CERRADO'" class="col-4 col-md-2">
-                                <button type="button" (click)="reabrirTicket()"
-                                    class="btn btn-primary float-right botonSize">Re-abrir ticket</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+            <hr />
+            <div>
+              <textarea
+                class="form-control form-control-sm"
+                id="DESCTICKETDET"
+                rows="3"
+                [(ngModel)]="hdTICKETDET.DESCTICKETDET"
+                name="DESCTICKETDET"
+              ></textarea>
             </div>
-
+            <hr />
+            <div class="row">
+              <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
+                <button
+                  type="button"
+                  (click)="guardar()"
+                  class="btn btn-primary float-right btn-sm botonSize"
+                >
+                  Publicar nota
+                </button>
+              </div>
+              <div *ngIf="_ESTATUS != 'CERRADO'" class="col-4 col-md-2">
+                <button
+                  type="button"
+                  (click)="cerrarTicket()"
+                  class="btn btn-primary float-right btn-sm botonSize"
+                >
+                  Cerrar ticket
+                </button>
+              </div>
+              <div *ngIf="_ESTATUS == 'CERRADO'" class="col-4 col-md-2">
+                <button
+                  type="button"
+                  (click)="reabrirTicket()"
+                  class="btn btn-primary float-right btn-sm botonSize"
+                >
+                  Re-abrir ticket
+                </button>
+              </div>
+            </div>
+          </a>
         </div>
-
-        <h3 align="center">Historial notas</h3>
-        <div class="row">
-            <div class="col-md-1">
-
-            </div>
-            <div class="col-md-10">
-                
-                    <div class="row" *ngFor="let item of NOTAS">
-                        <a class="list-group-item list-group-item-action">
-                            <div class="row">
-                                <strong>FECHA: {{item.FECHA | date: "dd/MM/yyyy h:mm a"}} - USUARIO:
-                                    {{item.IDUSUARIO}}</strong>
-                            </div>
-                            <hr>
-                            <div>
-                                <div class="row">
-                                    <div class="col-1">
-                                        <strong>Descripción:</strong>
-                                    </div>
-                                    <div class="col-10">
-                                        <div [innerHTML]="transformaHtml(item.DESCTICKETDET)"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </a>
-                    </div>
-
-                
-
-            </div>
-            <!-- /.col -->
-
-        </div>
+      </div>
     </div>
+
+    <h3 align="center">Historial notas</h3>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row" *ngFor="let item of NOTAS">
+          <a class="list-group-item list-group-item-action">
+            <div class="row">
+              FECHA: {{ item.FECHA | date: "dd/MM/yyyy h:mm a" }} - USUARIO:
+              {{ item.IDUSUARIO }}
+            </div>
+            <hr />
+            <div>
+              <div class="row">
+                <div class="col-1">Descripción:</div>
+                <div class="col-10">
+                  <div [innerHTML]="transformaHtml(item.DESCTICKETDET)"></div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+  </div>
 </section>

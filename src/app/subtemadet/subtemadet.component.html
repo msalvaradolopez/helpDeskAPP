@@ -20,7 +20,7 @@
           <!-- form start -->
           <form [formGroup]="validaCaptura" autocomplete="off">
             <div class="card-body">
-              <div class="form-group row">
+              <div class="form-group">
                 <label
                   *ngIf="false"
                   for="IDCLIENTE"
@@ -42,19 +42,68 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+
+              <div class="form-group">
+                <label
+                  *ngIf="false"
+                  for="IDTIPODET"
+                  class="col-2 col-form-label"
+                  >ID TIPODET</label
+                >
+                <div *ngIf="false" class="col-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="IDTIPODET"
+                    [class.is-invalid]="validaCampo('IDTIPODET')"
+                    formControlName="IDTIPODET"
+                  />
+                  <div *ngIf="validaCampo('IDTIPODET')">
+                    <small style="color: red">{{
+                      mensajeErrorCampo("IDTIPODET")
+                    }}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <div class="col-12">
-                  <label for="NOMTIPO">Descripción</label>
+                  <label for="IDTIPO">Tema de ayuda</label>
+                  <!-- select -->
+                  <select
+                    class="form-control form-control-sm"
+                    id="IDTIPO"
+                    [class.is-invalid]="validaCampo('IDTIPO')"
+                    formControlName="IDTIPO"
+                  >
+                    <option
+                      [value]="item.IDTIPO"
+                      *ngFor="let item of TEMASLIST"
+                    >
+                      {{ item.NOMTIPO }}
+                    </option>
+                  </select>
+                  <div *ngIf="validaCampo('IDTIPO')">
+                    <small style="color: rgb(150, 50, 50)">{{
+                      mensajeErrorCampo("IDTIPO")
+                    }}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-12">
+                  <label for="NOMTIPODET">Descripción</label>
                   <input
                     type="text"
                     class="form-control form-control-sm"
-                    id="NOMTIPO"
-                    [class.is-invalid]="validaCampo('NOMTIPO')"
-                    formControlName="NOMTIPO"
+                    id="NOMTIPODET"
+                    [class.is-invalid]="validaCampo('NOMTIPODET')"
+                    formControlName="NOMTIPODET"
                   />
-                  <div *ngIf="validaCampo('NOMTIPO')">
+                  <div *ngIf="validaCampo('NOMTIPODET')">
                     <small style="color: red">{{
-                      mensajeErrorCampo("NOMTIPO")
+                      mensajeErrorCampo("NOMTIPODET")
                     }}</small>
                   </div>
                 </div>

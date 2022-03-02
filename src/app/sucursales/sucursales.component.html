@@ -1,59 +1,44 @@
-<style>
-    a {
-        line-height: 1em;
-        display: inline-block;
-        text-decoration: none;
-        padding: 10px;
-        margin: 5px;
-    }
-
-    .trow {
-        transition: transform .2s;
-    }
-
-    .trow:hover {
-        cursor: pointer;
-        transform: scale(1.03);
-        background: #e3e6e9;
-        color: black;
-    }
-
-    .trowColorLetra {
-        color: gray;
-        font-size: calc(.5em + .5vw);
-    }
-</style>
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Sucursales</h1>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Sucursales</h1>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="list-group">
-            <a *ngFor="let item of rows" (click)="editRow(item.IDSUCURSAL)"
-                class="list-group-item list-group-item-action trow">
-                <div class="row">
-                    <div class="col-6">
-                        <strong>
-                            <h5 class="mb-1">{{item.NOMSUCURSAL}}</h5>
-                        </strong>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 trowColorLetra">
-                        {{ "CLAVE: " + item.IDSUCURSAL }}
-                    </div>
-                </div>
-            </a>
+  <div class="container-fluid">
+    <div class="list-group">
+      <a
+        *ngFor="let item of rows"
+        (click)="editRow(item.IDSUCURSAL)"
+        class="list-group-item list-group-item-action trow"
+      >
+        <div class="row">
+          <div class="col-lg-12 trowColorLetra">
+            <h1>
+              <b> {{ item.NOMSUCURSAL }}</b>
+            </h1>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h6>
+              <span
+                class="trowColorLetra"
+                style="margin-left: 2em; margin-right: 0.5em"
+                >Clave:</span
+              >
+              <span class="trowColorValor">{{ item.IDSUCURSAL }}</span>
+            </h6>
+          </div>
+        </div>
+      </a>
     </div>
+  </div>
 </section>

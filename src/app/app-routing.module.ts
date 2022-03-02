@@ -9,6 +9,8 @@ import { ParamdetComponent } from './paramdet/paramdet.component';
 import { ParamsComponent } from './params/params.component';
 import { SladetComponent } from './sladet/sladet.component';
 import { SlasComponent } from './slas/slas.component';
+import { SubtemadetComponent } from './subtemadet/subtemadet.component';
+import { SubtemasComponent } from './subtemas/subtemas.component';
 import { SucursaldetComponent } from './sucursaldet/sucursaldet.component';
 import { SucursalesComponent } from './sucursales/sucursales.component';
 import { TemadetComponent } from './temadet/temadet.component';
@@ -44,6 +46,8 @@ const routes: Routes = [
   { path: "paramdet", component: ParamdetComponent },
   { path: "dashboard", component: DashboardComponent },
   { path: "consultas", component: ConsultasComponent },
+  { path: "subtemas", component: SubtemasComponent },
+  { path: "subtemadet", component: SubtemadetComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: LoginComponent }
 ];

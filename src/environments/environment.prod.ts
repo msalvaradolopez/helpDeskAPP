@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiURL : "http://quantusgo.somee.com/helpDeskAPI/api/values"
+  apiURL : "https://msalvarado.somee.com/helpDeskAPI/api/values"
 };

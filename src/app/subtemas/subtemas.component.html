@@ -28,8 +28,27 @@
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1>Temas de ayuda</h1>
+      <div class="col-sm-12 col-md-3">
+        <h1>Sub temas de ayuda</h1>
+      </div>
+      <div class="col-sm-12 col-md-9">
+        <form>
+          <!-- select -->
+          <select
+            id="idTemaAyuda"
+            class="form-control form-control-sm"
+            [(ngModel)]="idTemaAyuda"
+            name="idTemaAyuda"
+            (change)="cambioTemaAyuda($event.target.value)"
+          >
+            <option [value]="null" disabled selected>
+              Seleccionar Tema de ayuda...
+            </option>
+            <option [value]="item.IDTIPO" *ngFor="let item of TEMASLIST">
+              {{ item.NOMTIPO }}
+            </option>
+          </select>
+        </form>
       </div>
     </div>
   </div>
@@ -42,13 +61,13 @@
     <div class="list-group">
       <a
         *ngFor="let item of rows"
-        (click)="editRow(item.IDTIPO)"
+        (click)="editRow(item.IDTIPODET)"
         class="list-group-item list-group-item-action trow"
       >
         <div class="row">
           <div class="col-6">
             <strong>
-              <h5 class="mb-1">{{ item.NOMTIPO }}</h5>
+              <h5 class="mb-1">{{ item.NOMTIPODET }}</h5>
             </strong>
           </div>
         </div>

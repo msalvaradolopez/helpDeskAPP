@@ -1,54 +1,60 @@
 <style>
-    a {
-        line-height: 1em;
-        display: inline-block;
-        text-decoration: none;
-        padding: 10px;
-        margin: 5px;
-    }
+  tr:nth-child(even) {
+    background-color: gainsboro;
+  }
 
-    .trow {
-        transition: transform .2s;
-    }
+  .trow {
+    transition: transform 0.2s;
+  }
 
-    .trow:hover {
-        cursor: pointer;
-        transform: scale(1.03);
-        background: #e3e6e9;
-        color: black;
-    }
+  .trowx:hover {
+    background: gainsboro;
+    color: black;
+  }
 
-    .trowColorLetra {
-        color: gray;
-        font-size: calc(.5em + .5vw);
-    }
+  .trowColorLetra {
+    color: gray;
+    font-size: calc(0.5em + 0.5vw);
+  }
 </style>
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Departamentos</h1>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Departamentos</h1>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="list-group">
-            <a *ngFor="let item of rows" (click)="editRow(item.IDDEPTO)"
-                class="list-group-item list-group-item-action trow">
-                <div class="row">
-                    <div class="col-6">
-                        <strong>
-                            <h5 class="mb-1">{{item.NOMDEPTO}}</h5>
-                        </strong>
-                    </div>
-                </div>
-            </a>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-1"></div>
+      <div class="col-sm-12 col-md-10">
+        <div class="card card-secondary">
+          <div class="box-body table-responsive no-padding">
+            <table class="table">
+              <thead style="background-color: #6c757d; color: #fff">
+                <tr>
+                  <th>Nombre departamento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of rows" class="trowx p-0 m-0">
+                  <td>{{ item.NOMDEPTO }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+
+    <br />
+  </div>
 </section>

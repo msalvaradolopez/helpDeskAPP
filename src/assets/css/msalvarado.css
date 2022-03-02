@@ -1,0 +1,23 @@
+.trow {
+  transition: transform 0.2s;
+  line-height: 1em;
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px;
+  margin: 2px;
+}
+
+.trow:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+  background: #e3e6e9;
+  color: black;
+}
+
+.trowColorLetra {
+  color: gray;
+}
+
+.trowColorValor {
+  color: darkcyan;
+}

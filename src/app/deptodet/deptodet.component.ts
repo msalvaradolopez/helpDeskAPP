@@ -21,7 +21,7 @@ confirmOkaytext = "Eliminar";
 // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
 
 datos: any = null;
-_TITULO: string = "DEPARTAMENTO DETALLE."
+_TITULO: string = "Departamento detalle."
 _IDCLIENTE: string = "";
 _IDDEPTO: string = "";
 _ACCION: string = "N"

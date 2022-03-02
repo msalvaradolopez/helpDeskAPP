@@ -24,11 +24,12 @@ export class TicketdetComponent implements OnInit {
   // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
 
   datos: any = null;
-  _TITULO: string = "TICKET DETALLE."
+  _TITULO: string = "Ticket detalle."
   _IDCLIENTE: string = "";
   _IDTICKET: string = "";
   _IDUSUARIO: string = "";
   _ACCION: string = "N"
+  idTemaAyuda: string = "";
 
   validaCaptura: FormGroup;
 
@@ -42,6 +43,7 @@ export class TicketdetComponent implements OnInit {
 
   USUARIOS: any[];
   CATEGORIAS: any[];
+  SUBTEMASAYUDA: any[];
 
   prioridades: any[] = [
     { ID: 1, NOMBRE: "BAJA" },
@@ -75,7 +77,9 @@ export class TicketdetComponent implements OnInit {
       ASIGNADOA: new FormControl(null),
       IDPRIORIDAD: new FormControl("1", [Validators.required]),
       ORIGEN: new FormControl("1", [Validators.required]),
-      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"),  disabled: true }, [Validators.required])
+      FECHA: new FormControl({ value: moment(this.fechaActual).format("DD/MM/YYYY"),  disabled: true }, [Validators.required]),
+      IDTIPODET: new FormControl("", [Validators.required]),
+      ACCESOREMOTO: new FormControl("", [Validators.required])
     });
 
     this.subscription = this._servicios.navbarRespIcono$
@@ -122,7 +126,9 @@ export class TicketdetComponent implements OnInit {
             ASIGNADOA: datos.ASIGNADOA,
             NOMASIGNADO: datos.NOMASIGNADO,
             ORIGEN: datos.ORIGEN,
-            FECHA: datos.FECHA
+            FECHA: datos.FECHA,
+            ACCESOREMOTO: datos.ACCESOREMOTO,
+            IDTIPODET: datos.IDTIPODET
           });
         }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"),
           () => this.validaCaptura.markAllAsTouched());
@@ -195,6 +201,16 @@ export class TicketdetComponent implements OnInit {
   goBack() {
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
     this._router.navigate(['/tickets']);
+  }
+
+  cambioTemaAyuda(idTemaAyuda: string) {
+    this.idTemaAyuda = idTemaAyuda;
+    this.SUBTEMASAYUDA = null;
+    this._servicios.wsGeneral("getSubTemasList", { idcliente: this._IDCLIENTE, valor: "0", idTema: this.idTemaAyuda })
+      .subscribe(x => {
+        this.SUBTEMASAYUDA = x;
+
+      }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Sub temas de ayuda"));
   }
 
   ngOnDestroy() {

@@ -23,7 +23,7 @@ export class TemadetComponent implements OnInit {
   // VALORES DEFAULT PARA VENTANA DE CONFIRMACION.
 
   datos: any = null;
-  _TITULO: string = "TEMA DETALLE."
+  _TITULO: string = "Tema detalle."
   _IDCLIENTE: string = "";
   _IDTIPO: string = "";
   _ACCION: string = "N"

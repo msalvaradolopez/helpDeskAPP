@@ -25,12 +25,12 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/css/msalvarado.css",
               "node_modules/admin-lte/dist/css/AdminLTE.min.css",
               "node_modules/admin-lte/dist/css/skins/_all-skins.min.css",
               "node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.css",
               "node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
               "node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
-              "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
               "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
               "node_modules/admin-lte/plugins/jqvmap/jqvmap.min.css",
               "node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css",
@@ -76,7 +76,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "4mb",
                   "maximumError": "5mb"
                 },
                 {

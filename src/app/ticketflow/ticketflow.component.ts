@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ServiciosService } from '../servicios.service';
 import { NgxConfirmBoxService } from 'ngx-confirm-box';
 import { DomSanitizer } from "@angular/platform-browser";
+import { DatePipe } from '@angular/common';
 declare const moment: any;
 declare var $: any;
 
@@ -37,9 +38,11 @@ export class TicketflowComponent implements OnInit {
     ASIGNADOA: "",  
     NOMASIGNADO: "",
     ORIGEN: "",
-    FECHA: ""
+    FECHA: "",
+    ACCESOREMOTO: "",
+    IDTIPODET: ""
   };
-  _TITULO: string = "TICKET DETALLE."
+  _TITULO: string = "Tcket detalle."
   _IDCLIENTE: string = "";
   _IDTICKET: string = "";
   _IDUSUARIO: string = "";
@@ -64,6 +67,7 @@ export class TicketflowComponent implements OnInit {
   USUARIOS: any[];
   CATEGORIAS: any[];
   ASIGNADOS: any[];
+  SUBTEMASAYUDA: any[];
 
   prioridades: any[] = [
     { ID: 1, NOMBRE: "BAJA" },
@@ -78,6 +82,8 @@ export class TicketflowComponent implements OnInit {
     { ID: 3, NOMBRE: "LLAMADA" },
     { ID: 4, NOMBRE: "CHAT" }
   ];
+
+  pipe = new DatePipe('en-US');
 
   constructor(private _servicios: ServiciosService,
     private _router: Router,
@@ -142,7 +148,10 @@ export class TicketflowComponent implements OnInit {
           if (datos.ESTATUS == "R")
             datos.NOMESTATUS = "RE-ABIERTA";
 
-            console.log(this.datos);
+            datos.FECHA = this.pipe.transform(datos.FECHA, 'dd/MM/yyyy hh:mm');
+
+            this.cambioTemaAyuda(datos.IDTIPO);
+
         }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Ticket"));
     } else {
       this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: true, BUSCAR: false });
@@ -207,6 +216,14 @@ export class TicketflowComponent implements OnInit {
         this._toastr.success(resp, "Notas");
       },
         error => this._toastr.error("Error: " + error.error.ExceptionMessage, "Notas"));
+  }
+
+  cambioTemaAyuda(idTemaAyuda: string) {
+    this._servicios.wsGeneral("getSubTemasList", { idcliente: this._IDCLIENTE, valor: "", idTema: idTemaAyuda })
+    .subscribe(x => {
+      this.SUBTEMASAYUDA = x;
+
+    }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Sub temas de ayuda"));
   }
 
   goBack() {

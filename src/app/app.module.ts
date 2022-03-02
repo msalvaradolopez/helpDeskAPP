@@ -30,6 +30,8 @@ import { ParamsComponent } from './params/params.component';
 import { ParamdetComponent } from './paramdet/paramdet.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConsultasComponent } from './consultas/consultas.component';
+import { SubtemasComponent } from './subtemas/subtemas.component';
+import { SubtemadetComponent } from './subtemadet/subtemadet.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { ConsultasComponent } from './consultas/consultas.component';
     ParamsComponent,
     ParamdetComponent,
     DashboardComponent,
-    ConsultasComponent
+    ConsultasComponent,
+    SubtemasComponent,
+    SubtemadetComponent
   ],
   imports: [
     BrowserModule,
