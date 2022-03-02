@@ -1,7 +1,7 @@
+import { jitOnlyGuardedExpression } from '@angular/compiler/src/render3/util';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ServiciosService } from './servicios.service';
+
 declare var $: any;
 
 @Component({
@@ -11,58 +11,35 @@ declare var $: any;
 })
 export class AppComponent implements OnInit{
   title = 'helpDeskAPP';
-
-  menuSiNo:boolean = false;
-  IDUSUARIO: string = "MSALVARADO";
-
   classMenu: string = "";
-  ROL: string = "";
+  menuSiNo: boolean = false;
 
-  menuItems: any[] = [];
-  menu: any[] = [
-    { IDMENU: "dashboard", NOMBRE: "Dashboard", ICONO: "nav-icon fas fa-chart-line", ROL: "A" },
-    { IDMENU: "consultas", NOMBRE: "Consultas", ICONO: "nav-icon fas fa-clipboard-list", ROL: "A" },
-    { IDMENU: "params", NOMBRE: "Parametros", ICONO: "nav-icon fas fa-cog", ROL: "A" },
-    { IDMENU: "sucursales", NOMBRE: "Sucursales", ICONO: "nav-icon fas fa-store", ROL: "A" },
-    { IDMENU: "deptos", NOMBRE: "Departamentos", ICONO: "nav-icon fas fa-layer-group", ROL: "A" },
-    { IDMENU: "usuarios", NOMBRE: "Usuarios", ICONO: "nav-icon fas fa-users", ROL: "A" },
-    { IDMENU: "temas", NOMBRE: "Temas ayuda", ICONO: "nav-icon fas fa-list-ol", ROL: "A" },
-    { IDMENU: "subtemas", NOMBRE: "Sub temas ayuda", ICONO: "nav-icon fas fa-list-ol", ROL: "A" },
-    { IDMENU: "slas", NOMBRE: "SLA configuración", ICONO: "nav-icon fas fa-ruler", ROL: "A" },
-    { IDMENU: "tickets", NOMBRE: "Tickets", ICONO: "nav-icon fas fa-clipboard-list", ROL: "A" },
-    { IDMENU: "login", NOMBRE: "Login", ICONO: "nav-icon fas fa-key", ROL: "A" },
-    { IDMENU: "dashboard", NOMBRE: "Dashboard", ICONO: "nav-icon fas fa-chart-line", ROL: "S" },
-    { IDMENU: "consultas", NOMBRE: "Consultas", ICONO: "nav-icon fas fa-clipboard-list", ROL: "S" },
-    { IDMENU: "slas", NOMBRE: "SLA configuración", ICONO: "nav-icon fas fa-ruler", ROL: "S" },
-    { IDMENU: "tickets", NOMBRE: "Tickets", ICONO: "nav-icon fas fa-clipboard-list", ROL: "S" },
-    { IDMENU: "login", NOMBRE: "Login", ICONO: "nav-icon fas fa-key", ROL: "S" },
-    { IDMENU: "tickets", NOMBRE: "Tickets", ICONO: "nav-icon fas fa-clipboard-list", ROL: "U" },
-    { IDMENU: "login", NOMBRE: "Login", ICONO: "nav-icon fas fa-key", ROL: "U" }
-  ];
-
-  constructor(private _servicios: ServiciosService, private _router: Router) { }
+  constructor(private _servicios: ServiciosService) { }
 
   ngOnInit() {
-    localStorage.clear();
+
+
+    let _classMenu = localStorage.getItem("classMenu")
+    let _menuSiNo = localStorage.getItem("menuSiNo");
+
+    if (_classMenu)
+      this.classMenu = _classMenu;
+
+    if (_menuSiNo)
+      this.menuSiNo = (_menuSiNo == "true");
 
     this._servicios.activarmenu$
-      .subscribe(accion => {
-        this.menuSiNo = accion;
-        if (accion) {
-          this.ROL = localStorage.getItem("ROL");
-          this.menuItems = this.menu.filter(x => x.ROL == this.ROL);
-          if (this.ROL == "A" || this.ROL == "S")
-            this._router.navigate(['/dashboard']);
+    .subscribe(accion => {
+      this.menuSiNo = accion;
+      localStorage.setItem("menuSiNo", String(this.menuSiNo));
+      if (accion) 
+        this.classMenu = "content-wrapper";
+       else
+        this.classMenu = "wrapper";
 
-          if (this.ROL == "U")
-            this._router.navigate(['/tickets']);
+      localStorage.setItem("classMenu", this.classMenu);
 
-          this.classMenu = "content-wrapper";
-        } else
-          this.classMenu = "wrapper";
-
-        this.IDUSUARIO = localStorage.getItem("IDUSUARIO");
-      });
-
+    });
   }
+
 }

@@ -46,7 +46,6 @@ export class SucursalesComponent implements OnInit {
     this._servicios.wsGeneral("getSucursalesList", { idcliente: this._idcliente, valor: this.valorBuscar })
       .subscribe(x => {
         this.rows = x;
-
       }, error => this._toastr.error("Error : " + error.error.ExceptionMessage, "Sucursal"));
   }
 

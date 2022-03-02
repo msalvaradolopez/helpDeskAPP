@@ -1,54 +1,14 @@
 <app-navbar></app-navbar>
-<!-- Main Sidebar Container -->
-<aside *ngIf="menuSiNo" class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
-  <a href="#!" class="brand-link" target="_blank">
-    <span class="brand-text font-weight-light">HelpDesk 1.0.0</span>
-  </a>
-
-  <!-- Sidebar -->
-  <div *ngIf="menuSiNo" class="sidebar">
-    <!-- Sidebar user panel (optional) -->
-    <div *ngIf="menuSiNo" class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="info">
-        <a class="d-block">{{IDUSUARIO}}</a>
-      </div>
-    </div>
-
-    <!-- Sidebar Menu -->
-    <nav *ngIf="menuSiNo" class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-        <li class="nav-item" *ngFor="let listItem of menuItems">
-          <a [routerLink]=listItem.IDMENU class="nav-link">
-            <i [ngClass]=listItem.ICONO></i>
-            <p>
-              {{listItem.NOMBRE}}
-            </p>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-  </div>
-  <!-- /.sidebar -->
-</aside>
-
+<app-menu></app-menu>
 <!-- Content Wrapper. Contains page content -->
 <div [ngClass]="classMenu">
-
   <router-outlet></router-outlet>
-
 </div>
 <!-- /.content-wrapper -->
 <footer *ngIf="menuSiNo" class="main-footer">
   <strong>Copyright &copy; 2020 <a href="#">NEGOCIO DIGITAL</a>.</strong>
   All rights reserved.
-  <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 1.0.0
-  </div>
+  <div class="float-right d-none d-sm-inline-block"><b>Version</b> 1.0.0</div>
 </footer>
 
 <!-- Control Sidebar -->

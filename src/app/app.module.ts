@@ -32,6 +32,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConsultasComponent } from './consultas/consultas.component';
 import { SubtemasComponent } from './subtemas/subtemas.component';
 import { SubtemadetComponent } from './subtemadet/subtemadet.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SubtemadetComponent } from './subtemadet/subtemadet.component';
     DashboardComponent,
     ConsultasComponent,
     SubtemasComponent,
-    SubtemadetComponent
+    SubtemadetComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
