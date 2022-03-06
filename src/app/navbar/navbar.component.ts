@@ -21,7 +21,8 @@ export class NavbarComponent implements OnInit {
     AGREGAR: false,
     BORRAR: false,
     GUARDAR: false,
-    BUSCAR: false
+    BUSCAR: false,
+    GUARDARNUEVO: false
   };
 
   constructor(private _servicios: ServiciosService) { }
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit {
         this.navbarAcciones.GUARDAR = resp.GUARDAR;
         this.navbarAcciones.TITULO = resp.TITULO;
         this.navbarAcciones.BUSCAR = resp.BUSCAR;
+        this.navbarAcciones.GUARDARNUEVO = resp.GUARDARNUEVO;
       });
 
     this.buscarForm = new FormGroup({

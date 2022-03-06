@@ -5,6 +5,7 @@
   text-decoration: none;
   padding: 10px;
   margin: 2px;
+  /*font-size: clamp(14px, 2vw, 20px);*/
 }
 
 .trow:hover {
@@ -20,4 +21,32 @@
 
 .trowColorValor {
   color: darkcyan;
+}
+
+.mostrar {
+  display: block;
+}
+
+.ocultar {
+  display: none;
+}
+
+.iconos {
+  cursor: pointer;
+  /*font-size: calc(0.4em + 1.4vw); */
+  font-size: clamp(20px, 2vw, 30px);
+}
+
+.iconos:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 576px) {
+  body {
+    font-size: 12px;
+  }
+
+  .titulosIconos {
+    display: none;
+  }
 }

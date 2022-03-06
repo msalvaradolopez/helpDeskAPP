@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
   constructor(private _servicios: ServiciosService, private _router: Router, private _toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: true });
+    this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false, GUARDARNUEVO: false  });
 
     this._IDCLIENTE = localStorage.getItem("IDCLIENTE"); // PARAMETRO GLOBAL.
     this._IDUSUARIO = localStorage.getItem("IDUSUARIO"); // PARAMETRO GLOBAL.

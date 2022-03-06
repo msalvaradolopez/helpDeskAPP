@@ -51,9 +51,9 @@ export class UsuariodetComponent implements OnInit, OnDestroy {
     private confirmBox: NgxConfirmBoxService) { }
 
   ngOnInit(): void {
-    this._IDCLIENTE = localStorage.getItem("IDCLIENTE"); // VARIABLE PARAMETRO.
-    this._IDUSUARIO = localStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
-    this._ACCION = localStorage.getItem("_ACCION");
+    this._IDCLIENTE = sessionStorage.getItem("IDCLIENTE"); // VARIABLE PARAMETRO.
+    this._IDUSUARIO = sessionStorage.getItem("_IDUSUARIO"); // VARIABLE PARAMETRO.
+    this._ACCION = sessionStorage.getItem("_ACCION");
 
     this.validaCaptura = new FormGroup({
       IDUSUARIO: new FormControl({ value: "", disabled: this._ACCION == "E" }, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
@@ -161,8 +161,8 @@ export class UsuariodetComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    localStorage.removeItem("_IDUSUARIO");
-    localStorage.removeItem("_ACCION");
+    sessionStorage.removeItem("_IDUSUARIO");
+    sessionStorage.removeItem("_ACCION");
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: false, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: false });
     this.subscription.unsubscribe();
   }

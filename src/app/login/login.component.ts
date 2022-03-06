@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    sessionStorage.clear();
   }
 
   login() {
@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
 
     this._servicios.wsGeneral("getLogin", param)
       .subscribe(resp => {
-        localStorage.setItem("IDUSUARIO", this.IDUSUARIO);
-        localStorage.setItem("ROL", resp.ROL);
-        localStorage.setItem("IDCLIENTE", resp.IDCLIENTE);
+        sessionStorage.setItem("IDUSUARIO", this.IDUSUARIO);
+        sessionStorage.setItem("ROL", resp.ROL);
+        sessionStorage.setItem("IDCLIENTE", resp.IDCLIENTE);
 
         this._servicios.accionMenu(true);
 

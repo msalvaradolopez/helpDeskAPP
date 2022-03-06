@@ -11,8 +11,7 @@ import { SladetComponent } from './sladet/sladet.component';
 import { SlasComponent } from './slas/slas.component';
 import { SubtemadetComponent } from './subtemadet/subtemadet.component';
 import { SubtemasComponent } from './subtemas/subtemas.component';
-import { SucursaldetComponent } from './sucursaldet/sucursaldet.component';
-import { SucursalesComponent } from './sucursales/sucursales.component';
+import { SucursalesmasterComponent } from './sucursalesmaster/sucursalesmaster.component';
 import { TemadetComponent } from './temadet/temadet.component';
 import { TemasComponent } from './temas/temas.component';
 import { TicketdetComponent } from './ticketdet/ticketdet.component';
@@ -25,8 +24,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
-  { path: "sucursales", component: SucursalesComponent },
-  { path: "sucursaldet", component: SucursaldetComponent },
+  { path: "sucursales", component: SucursalesmasterComponent },
   { path: "deptos", component: DeptosComponent },
   { path: "deptodet", component: DeptodetComponent },
   { path: "usuarios", component: UsuariosComponent },

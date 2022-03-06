@@ -19,8 +19,8 @@ export class AppComponent implements OnInit{
   ngOnInit() {
 
 
-    let _classMenu = localStorage.getItem("classMenu")
-    let _menuSiNo = localStorage.getItem("menuSiNo");
+    let _classMenu = sessionStorage.getItem("classMenu")
+    let _menuSiNo = sessionStorage.getItem("menuSiNo");
 
     if (_classMenu)
       this.classMenu = _classMenu;
@@ -31,13 +31,13 @@ export class AppComponent implements OnInit{
     this._servicios.activarmenu$
     .subscribe(accion => {
       this.menuSiNo = accion;
-      localStorage.setItem("menuSiNo", String(this.menuSiNo));
+      sessionStorage.setItem("menuSiNo", String(this.menuSiNo));
       if (accion) 
         this.classMenu = "content-wrapper";
        else
         this.classMenu = "wrapper";
 
-      localStorage.setItem("classMenu", this.classMenu);
+        sessionStorage.setItem("classMenu", this.classMenu);
 
     });
   }

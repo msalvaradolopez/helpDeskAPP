@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient  } from '@angular/common/http'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { environment } from "../environments/environment";
 
@@ -23,8 +24,15 @@ export class ServiciosService {
   private _buscarMat = new Subject<string>();
   buscarMat$ = this._buscarMat.asObservable();
 
+  // SE UTILIZA PARA ACTIVAR MASTER O DETALLE
+  private _ventanaMaster = new Subject<boolean>();
+  ventanaMaster$ = this._ventanaMaster.asObservable();
 
-  constructor(private _http: HttpClient) { }
+  // SE UTILIZAR PARA CONOCER EL BONTON GUARDAR/NUEVO
+  private _actualizarMaster = new Subject<boolean>();
+  actualizarMaster$ = this._actualizarMaster.asObservable();
+
+  constructor(private _http: HttpClient, private _router: Router) { }
 
   wsGeneral(ws: string, param: any ): Observable<any> {
     return this._http.post(this.apiURL + "/" + ws, param);
@@ -79,5 +87,21 @@ export class ServiciosService {
 
       
     return mensaje;
+  }
+
+  validaSesion(){
+    let _idusuario:string = sessionStorage.getItem("IDUSUARIO");
+    if (_idusuario)
+      return true
+    else 
+    this._router.navigate(['/login']);
+  }
+
+  ventanaMaster(accion: boolean) {
+    this._ventanaMaster.next(accion);
+  }
+
+  actualizarMaster(accion: boolean) {
+    this._actualizarMaster.next(accion);
   }
 }

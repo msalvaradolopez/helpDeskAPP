@@ -21,9 +21,12 @@ export class UsuariosComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this._servicios.validaSesion();
+
     this._servicios.navbarAcciones({ TITULO: "", AGREGAR: true, EDITAR: false, BORRAR: false, GUARDAR: false, BUSCAR: true });
 
-    this._idcliente = localStorage.getItem("IDCLIENTE"); // PARAMETRO GLOBAL.
+    this._idcliente = sessionStorage.getItem("IDCLIENTE"); // PARAMETRO GLOBAL.
 
     this._servicios.buscarMat$
       .subscribe(resp => {
@@ -53,14 +56,14 @@ export class UsuariosComponent implements OnInit {
   }
 
   editRow(idusuario: string) {
-    localStorage.setItem("_IDUSUARIO", idusuario);
-    localStorage.setItem("_ACCION", "E");
+    sessionStorage.setItem("_IDUSUARIO", idusuario);
+    sessionStorage.setItem("_ACCION", "E");
     this._router.navigate(['/usuariodet']);
   }
 
   newRow() {
-    localStorage.setItem("_IDUSUARIO", "0");
-    localStorage.setItem("_ACCION", "N");
+    sessionStorage.setItem("_IDUSUARIO", "0");
+    sessionStorage.setItem("_ACCION", "N");
     this._router.navigate(['/usuariodet']);
   }
 

@@ -43,9 +43,9 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     // localStorage.clear();
 
-      let _menuSiNo = localStorage.getItem("menuSiNo");
-      let _classMenu = localStorage.getItem("classMenu");
-      let _menuItems = JSON.parse(localStorage.getItem("menuItems"));
+      let _menuSiNo = sessionStorage.getItem("menuSiNo");
+      let _classMenu = sessionStorage.getItem("classMenu");
+      let _menuItems = JSON.parse(sessionStorage.getItem("menuItems"));
 
       if (_menuSiNo)
         this.menuSiNo = (_menuSiNo == "true");
@@ -59,11 +59,11 @@ export class MenuComponent implements OnInit {
     this._servicios.activarmenu$
       .subscribe(accion => {
         this.menuSiNo = accion;
-        localStorage.setItem("menuSiNo", String(this.menuSiNo));
+        sessionStorage.setItem("menuSiNo", String(this.menuSiNo));
         if (accion) {
-          this.ROL = localStorage.getItem("ROL");
+          this.ROL = sessionStorage.getItem("ROL");
           this.menuItems = this.menu.filter(x => x.ROL == this.ROL);
-          localStorage.setItem("menuItems", JSON.stringify(this.menuItems));
+          sessionStorage.setItem("menuItems", JSON.stringify(this.menuItems));
           if (this.ROL == "A" || this.ROL == "S")
             this._router.navigate(['/dashboard']);
 
@@ -71,19 +71,12 @@ export class MenuComponent implements OnInit {
             this._router.navigate(['/tickets']);
 
           this.classMenu = "content-wrapper";
-          localStorage.setItem("classMenu", String(this.classMenu));
-        } else {
+        } else 
           this.classMenu = "wrapper";
-          localStorage.setItem("classMenu", String(this.classMenu));
-        }
           
-
+        sessionStorage.setItem("classMenu", String(this.classMenu));
         this.IDUSUARIO = localStorage.getItem("IDUSUARIO");
       });
-
-      console.log(this.menuSiNo);
-      console.log(this.classMenu);
-
   }
 
 }

@@ -33,6 +33,7 @@ import { ConsultasComponent } from './consultas/consultas.component';
 import { SubtemasComponent } from './subtemas/subtemas.component';
 import { SubtemadetComponent } from './subtemadet/subtemadet.component';
 import { MenuComponent } from './menu/menu.component';
+import { SucursalesmasterComponent } from './sucursalesmaster/sucursalesmaster.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { MenuComponent } from './menu/menu.component';
     ConsultasComponent,
     SubtemasComponent,
     SubtemadetComponent,
-    MenuComponent
+    MenuComponent,
+    SucursalesmasterComponent
   ],
   imports: [
     BrowserModule,

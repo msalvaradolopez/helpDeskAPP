@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ServiciosService } from '../servicios.service';
@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './params.component.html',
   styleUrls: ['./params.component.css']
 })
-export class ParamsComponent implements OnInit {
+export class ParamsComponent implements OnInit, OnDestroy {
   rows: any[] = null;
   valorBuscar: string = "";
   _idcliente: string = "";
@@ -63,5 +63,12 @@ export class ParamsComponent implements OnInit {
     localStorage.setItem("_ACCION", "N");
     this._router.navigate(['/paramdet']);
   }
+
+  ngOnDestroy() {
+    
+    this.subscription.unsubscribe();
+    
+  }
+
 
 }
